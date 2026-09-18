@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>桌號 QR｜平日食器</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<style>
+  :root{--bg:#f4f0e8;--ink:#2a2622;--soft:#6e655c;--sage:#7a9084;--line:#cfc4b4;--white:#fbf8f2}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink);padding:24px 16px 48px}
+  .wrap{max-width:960px;margin:0 auto}
+  .logo{height:42px;margin-bottom:16px}
+  h1{font-family:"Noto Serif TC",serif;font-size:24px;letter-spacing:.1em;margin-bottom:8px}
+  .sub{font-size:14px;color:var(--soft);margin-bottom:16px}
+  .tools{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin-bottom:20px}
+  label{font-size:12px;color:var(--soft);display:block;margin-bottom:4px}
+  input{padding:8px 10px;border:1px solid var(--line);background:var(--white);font:inherit;min-width:120px}
+  button{padding:10px 16px;border:none;background:var(--sage);color:#fff;cursor:pointer;font:inherit;letter-spacing:.08em}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+  .card{background:var(--white);border:1px solid var(--line);padding:14px;text-align:center;break-inside:avoid}
+  .card canvas,.card img{width:140px;height:140px;margin:8px auto;display:block}
+  .tn{font-family:"Noto Serif TC",serif;font-size:22px;letter-spacing:.12em}
+  .url{font-size:10px;color:var(--soft);word-break:break-all;margin-top:6px}
+  .note{background:var(--white);border:1px solid var(--line);padding:14px;margin-bottom:18px;font-size:13px;color:var(--soft)}
+  .note code{background:#ebe4d8;padding:1px 4px}
+  @media print{
+    .tools,.note,button,.no-print{display:none!important}
+    body{background:#fff;padding:0}
+    .card{break-inside:avoid;page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <img class="logo" src="../brand/logo-heng-rice-noodle.png" alt="平日食器" />
+  <h1>桌號 QR 產生</h1>
+  <p class="sub">定案內用 5 桌（約 10 席：建議 3 雙人＋1 四人，或 5 雙人）· 另附外帶 QR 一張</p>
+
+  <div class="note">
+    <strong>產生方式：</strong>QR 內容＝完整點餐網址<br/>
+    內用：<code>.../order.html?table={桌號}</code><br/>外帶：<code>.../order.html?mode=takeout</code><br/>
+    上線後請用正式網域（例 <code>https://pingrishiqiu.com/order-system/order.html?table=3</code>）。本頁依你開啟的網址自動帶入根路徑。
+  </div>
+
+  <div class="tools no-print">
+    <div>
+      <label>桌數（定案 1–5，可改）</label>
+      <input type="number" id="count" value="5" min="1" max="40" />
+    </div>
+    <div style="flex:1;min-width:200px">
+      <label>站台根網址（可改）</label>
+      <input type="text" id="base" style="width:100%" />
+    </div>
+    <button type="button" id="gen">產生</button>
+    <button type="button" id="print" style="background:#2a2622">列印桌貼</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+<script>
+const baseInput = document.getElementById("base");
+const origin = location.origin + location.pathname.replace(/tables\.html.*/, "");
+baseInput.value = origin.replace(/\/$/, "");
+
+async function makeQR(text, el) {
+  const canvas = document.createElement("canvas");
+  await QRCode.toCanvas(canvas, text, { width: 140, margin: 1, color: { dark: "#2a2622", light: "#fbf8f2" } });
+  el.appendChild(canvas);
+}
+
+async function generate() {
+  const n = Math.min(40, Math.max(1, parseInt(document.getElementById("count").value, 10) || 5));
+  const root = baseInput.value.replace(/\/$/, "");
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  for (let i = 1; i <= n; i++) {
+    const url = `${root}/order.html?table=${i}`;
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `<div class="tn">桌 ${i}</div><div class="qr"></div><div class="url">${url}</div>`;
+    grid.appendChild(card);
+    await makeQR(url, card.querySelector(".qr"));
+  }
+  // 外帶 QR（櫃檯／門口）
+  const takeUrl = `${root}/order.html?mode=takeout`;
+  const takeCard = document.createElement("div");
+  takeCard.className = "card";
+  takeCard.style.borderColor = "#c47a4e";
+  takeCard.innerHTML = `<div class="tn" style="color:#c47a4e">外帶</div><div class="qr"></div><div class="url">${takeUrl}</div><div style="font-size:11px;margin-top:6px;color:#c47a4e">櫃檯／門口貼紙</div>`;
+  grid.appendChild(takeCard);
+  await makeQR(takeUrl, takeCard.querySelector(".qr"));
+}
+document.getElementById("gen").onclick = generate;
+document.getElementById("print").onclick = () => window.print();
+generate();
+</script>
+</body>
+</html>
