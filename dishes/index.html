@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>菜品故事｜平日食器</title>
+<link rel="icon" type="image/png" href="../brand/favicon.png" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&family=Noto+Sans+JP:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper:#f4f0e8; --sand:#d9cfc0; --sage:#7a9084; --sage-d:#5f7569;
+    --ink:#2a2622; --soft:#6e655c; --clay:#c4a090; --seal:#b86a5c; --white:#fbf8f2; --line:#cfc4b4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Noto Sans TC","Noto Sans JP","Noto Sans KR",sans-serif;background:var(--paper);color:var(--ink);line-height:1.7}
+  .wrap{width:min(960px,100%);margin:0 auto;padding:0 20px}
+  header.bar{
+    position:sticky;top:0;z-index:20;background:rgba(244,240,232,.94);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:12px 0;
+  }
+  .bar-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .logo{height:40px}
+  .langs{display:flex;gap:6px;flex-wrap:wrap}
+  .langs button{
+    border:1px solid var(--sand);background:var(--white);padding:6px 10px;font:inherit;font-size:12px;
+    letter-spacing:.06em;cursor:pointer;color:var(--soft);
+  }
+  .langs button.on{border-color:var(--sage);color:var(--sage-d);background:rgba(122,144,132,.12)}
+  .hero{padding:36px 0 20px}
+  .hero h1{font-family:"Noto Serif TC",serif;font-size:clamp(24px,4vw,32px);letter-spacing:.14em;margin-bottom:10px}
+  .lead{color:var(--soft);font-size:14px;font-weight:300;max-width:40em}
+  .back{display:inline-block;margin-top:14px;font-size:13px;color:var(--sage-d);border-bottom:1px solid var(--sage)}
+  .cat{font-family:"Noto Serif TC",serif;font-size:15px;letter-spacing:.2em;color:var(--sage-d);margin:28px 0 12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding-bottom:48px}
+  .card{background:var(--white);border:1px solid var(--sand);overflow:hidden;display:flex;flex-direction:column}
+  .ph{aspect-ratio:4/3;background:linear-gradient(145deg,#ebe4d6,#ddd3c2);position:relative}
+  .ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .ph .soon{
+    position:absolute;inset:0;display:grid;place-items:center;color:var(--soft);font-size:13px;letter-spacing:.08em;
+  }
+  .body{padding:14px 16px 18px;flex:1;display:flex;flex-direction:column;gap:8px}
+  .name{font-family:"Noto Serif TC",serif;font-size:20px;letter-spacing:.1em}
+  .sub{font-size:13px;color:var(--soft)}
+  .what{font-size:12px;color:var(--sage-d);letter-spacing:.04em}
+  .what strong{font-weight:600}
+  .story{font-size:13px;font-weight:300;color:var(--ink);line-height:1.75}
+  .price{margin-top:auto;font-family:"Noto Serif TC",serif;color:var(--seal);font-size:18px}
+  footer{border-top:1px solid var(--line);padding:24px 0 40px;text-align:center;font-size:12px;color:var(--soft)}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap bar-inner">
+    <a href="../index.html"><img class="logo" src="../brand/logo-soft-color.png" alt="平日食器" /></a>
+    <div class="langs" id="langs" role="group" aria-label="Language"></div>
+  </div>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <h1 id="title">菜品故事</h1>
+    <p class="lead" id="lead"></p>
+    <a class="back" id="back" href="../index.html">回官網</a>
+  </section>
+  <div id="list"></div>
+</main>
+<footer><div class="wrap" id="foot">平日食器 · Pingri Shiqiu</div></footer>
+<script src="dishes-data.js"></script>
+<script>
+const LANGS = [
+  { code: "zh", label: "中文" },
+  { code: "en", label: "EN" },
+  { code: "ja", label: "日本語" },
+  { code: "ko", label: "한국어" }
+];
+let lang = localStorage.getItem("pingri_lang") || "zh";
+if (!PINGRI_I18N[lang]) lang = "zh";
+
+function t() { return PINGRI_I18N[lang]; }
+
+function renderLangs() {
+  document.getElementById("langs").innerHTML = LANGS.map(l =>
+    `<button type="button" data-lang="${l.code}" class="${l.code===lang?"on":""}">${l.label}</button>`
+  ).join("");
+}
+
+function render() {
+  const ui = t();
+  document.documentElement.lang = lang === "zh" ? "zh-Hant" : lang;
+  document.title = ui.pageTitle + "｜" + ui.brand;
+  document.getElementById("title").textContent = ui.pageTitle;
+  document.getElementById("lead").textContent = ui.lead;
+  document.getElementById("back").textContent = ui.back;
+  document.getElementById("foot").textContent = ui.brand + " · Pingri Shiqiu";
+
+  const order = ["signature","don","noodle","soup","side","bento"];
+  const root = document.getElementById("list");
+  root.innerHTML = order.map(cat => {
+    const dishes = PINGRI_DISHES.filter(d => d.cat === cat);
+    if (!dishes.length) return "";
+    const cards = dishes.map(d => {
+      const L = d[lang] || d.zh;
+      const img = d.image
+        ? `<img src="${d.image}" alt="${L.name}" loading="lazy" />`
+        : `<div class="soon">${ui.pendingPhoto}</div>`;
+      return `<article class="card" id="${d.id}">
+        <div class="ph">${img}</div>
+        <div class="body">
+          <div class="name">${L.name}</div>
+          <div class="sub">${L.sub}</div>
+          <div class="what"><strong>${ui.what}</strong> · ${L.what}</div>
+          <p class="story"><strong>${ui.story}</strong> — ${L.story}</p>
+          <div class="price">${ui.price} $${d.price}</div>
+        </div>
+      </article>`;
+    }).join("");
+    return `<h2 class="cat">${ui.cats[cat]}</h2><div class="grid">${cards}</div>`;
+  }).join("");
+  renderLangs();
+}
+
+document.getElementById("langs").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-lang]");
+  if (!b) return;
+  lang = b.dataset.lang;
+  localStorage.setItem("pingri_lang", lang);
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
