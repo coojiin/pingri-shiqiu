@@ -35,40 +35,40 @@ window.PINGRI_DISHES = [
     cat: "don",
     price: 155,
     image: "../images/maxi-hongyou.png",
-    zh: { name: "麻香紅油", sub: "豆腐丼", what: "紅油麻香豆腐蓋飯", story: "嫩豆腐淋上微麻微辣的紅油，香而不躁。素食友善取向的定食，想清爽一點也能吃飽。" },
-    en: { name: "Numbing Chili Oil", sub: "Tofu Donburi", what: "Soft tofu rice bowl with chili-oil fragrance", story: "Silken tofu under a gently spicy, aromatic chili oil—warm heat, not aggressive. A lighter set-meal option that still fills you up." },
-    ja: { name: "麻香紅油", sub: "豆腐丼", what: "紅油香る豆腐丼", story: "やわらか豆腐に、ほんのり痺れる紅油を。辛さより香りが先に立つ、さっぱり食べられる定食です。" },
-    ko: { name: "마향 홍유", sub: "두부 덮밥", what: "홍유 향 두부 덮밥", story: "부드러운 두부 위에 살짝 매콤한 홍유를 올립니다. 자극보다 향이 먼저 느껴져, 담백하게 배를 채우고 싶을 때 좋습니다." }
+    zh: { name: "麻香紅油", sub: "豆腐丼", what: "家常麻香紅油豆腐丼", story: "麻香不嗆喉，收進丼裡就走。" },
+    en: { name: "Mala Chili Oil", sub: "Tofu Donburi", what: "Mapo-style tofu donburi with gentle chili fragrance", story: "Comforting heat, ready to go." },
+    ja: { name: "麻香紅油", sub: "豆腐丼", what: "麻辣香る豆腐丼", story: "刺激すぎない家常の辛さで、サッと食べて出勤にも。" },
+    ko: { name: "마향홍유", sub: "두부 덮밥", what: "마파 향의 두부 덮밥", story: "자극적이지 않은 집밥 매콤함, 빠르게 한 끼." }
   },
   {
     id: "suanhuo",
     cat: "don",
     price: 190,
     image: "../images/suanhuo-mankao.png",
-    zh: { name: "蒜火慢烤", sub: "排骨定食", what: "蒜香慢烤排骨定食", story: "排骨慢慢烤到外香內嫩，蒜香收尾。配飯與配菜，是比較正式一點的平日主餐。" },
-    en: { name: "Garlic Slow Roast", sub: "Pork Rib Teishoku", what: "Slow-roasted pork ribs with garlic", story: "Ribs roasted low and slow until tender inside and fragrant outside, finished with garlic. Served as a fuller weekday teishoku with rice and sides." },
-    ja: { name: "にんにくの慢火焼き", sub: "スペアリブ定食", what: "にんにく香るスペアリブ定食", story: "じっくり焼いたスペアリブににんにくの香り。ごはんと副菜付きで、平日のご褒美定食向きです。" },
-    ko: { name: "마늘 불 느린 구이", sub: "갈비 정식", what: "마늘 향 천천히 구운 갈비 정식", story: "갈비를 천천히 구워 겉은 향긋하고 속은 부드럽게, 마늘 향으로 마무리합니다. 밥과 반찬이 함께인, 조금 더 든든한 평일 정식입니다." }
+    zh: { name: "蒜火慢烤", sub: "排骨定食", what: "蒜香慢烤排骨定食", story: "蒜香排骨，定食一次滿足。" },
+    en: { name: "Garlic Slow Roast", sub: "Pork Rib Set", what: "Garlic slow-roast pork rib set meal", story: "Savory garlic ribs in one complete meal." },
+    ja: { name: "蒜火慢烤", sub: "排骨定食", what: "ニンニク香るスペアリブ定食", story: "ガッツリ満足の一皿。" },
+    ko: { name: "산화만고", sub: "갈비 정식", what: "마늘 향 폭립 정식", story: "한번 시키면 든든하게 끝나는 한 상." }
   },
   {
     id: "zhaoshao",
     cat: "don",
     price: 200,
     image: "../images/zhaoshao-houqie.png",
-    zh: { name: "照燒厚切", sub: "豬排飯", what: "厚切照燒豬排飯", story: "厚切豬排煎香後淋照燒醬，甜鹹平衡。外國朋友可對照日式豬排飯，但醬汁更偏台式家常甜鹹。" },
-    en: { name: "Thick-Cut Teriyaki", sub: "Pork Cutlet Rice", what: "Thick pork cutlet with teriyaki-style glaze", story: "A thick pork cutlet seared then glazed sweet-savory. Close to Japanese tonkatsu rice in form, with a more home-style Taiwanese sweet-salt balance." },
-    ja: { name: "照り焼き厚切り", sub: "トンカツご飯", what: "厚切りポークの照り焼きご飯", story: "厚切りポークを焼いて照り焼き風ソースで。和風トンカツご飯に近い見た目で、甘じょっぱい台湾家庭のバランスです。" },
-    ko: { name: "데리야키 두툼컷", sub: "돈가스 덮밥", what: "두툼한 데리야키 돈가스 덮밥", story: "두툼한 돼지고기를 구운 뒤 달짝지근한 데리야키 풍 소스를 올립니다. 일본식 돈가스 덮밥과 비슷하지만, 타이완 집밥의 단짠 균형에 더 가깝습니다." }
+    zh: { name: "照燒厚切", sub: "豬排飯", what: "厚切照燒豬排飯", story: "厚切豬排，照燒亮汁。" },
+    en: { name: "Glazed Thick Cut", sub: "Pork Cutlet Rice", what: "Thick-cut pork with glossy teriyaki glaze over rice", story: "Juicy cut, shiny glaze." },
+    ja: { name: "照焼厚切", sub: "豚排飯", what: "厚切りトンテキ風の照り焼き豚ごはん", story: "ツヤのあるタレがご飯に合う。" },
+    ko: { name: "데리야키 후컷", sub: "돈까스 덮밥", what: "두툼한 데리야키 돼지덮밥", story: "윤기 나는 소스가 포인트." }
   },
   {
     id: "congyou",
     cat: "noodle",
     price: 160,
     image: "../images/congyou-xilang.png",
-    zh: { name: "蔥油細浪", sub: "雞絲麵", what: "蔥油雞絲細麵", story: "細麵拌蔥油香，加上雞絲。像一碗溫柔的台式乾麵，好入口、好分享。" },
-    en: { name: "Scallion-Oil Ripples", sub: "Shredded Chicken Noodles", what: "Thin noodles with scallion oil and chicken", story: "Fine noodles tossed in fragrant scallion oil with shredded chicken. Soft, everyday Taiwanese dry noodles—easy to like." },
-    ja: { name: "ネギ油のさざ波", sub: "鶏ささみ細麺", what: "ネギ油と鶏ささみの細麺", story: "細麺にネギ油の香りと鶏ささみ。やさしい台湾風まぜ麺で、誰でも食べやすい一碗です。" },
-    ko: { name: "파기름 잔물결", sub: "닭살 가는 면", what: "파기름 닭살 잔면", story: "가는 면에 파기름 향과 닭살을 버무립니다. 부드러운 타이완식 비빔면으로, 부담 없이 먹기 좋습니다." }
+    zh: { name: "蔥油細浪", sub: "雞絲麵", what: "蔥油雞絲麵", story: "蔥油雞絲，平日快速一碗。" },
+    en: { name: "Scallion Oil Waves", sub: "Chicken Noodles", what: "Scallion-oil noodles with shredded chicken", story: "A fast weekday bowl." },
+    ja: { name: "葱油細浪", sub: "鶏絲麺", what: "ネギ油香る鶏しぐれ風麺", story: "平日の早い一杯に。" },
+    ko: { name: "파기름 세랑", sub: "닭고기 면", what: "파기름 닭고기 면", story: "평일에도 부담 없이 빠른 한 그릇." }
   },
   {
     id: "hongshao",
@@ -85,70 +85,70 @@ window.PINGRI_DISHES = [
     cat: "noodle",
     price: 220,
     image: "../images/yanchi-hai-o.png",
-    zh: { name: "蔭豉海蚵", sub: "炒烏龍", what: "蔭豉鮮蚵炒烏龍麵", story: "台灣南部常見的蔭豉香，配鮮蚵與烏龍麵快炒。鹹鮮帶發酵香，是很台式的海鮮麵。" },
-    en: { name: "Fermented Black Bean Oysters", sub: "Stir-Fried Udon", what: "Oyster stir-fried udon with Taiwanese fermented black beans", story: "Southern Taiwan’s fermented black-bean aroma with plump oysters and chewy udon. Salty, briny, and deeply local." },
-    ja: { name: "蔭豉の牡蠣", sub: "焼きうどん", what: "蔭豉（発酵黒豆）牡蠣焼きうどん", story: "台湾南部の蔭豉の香りに、牡蠣とコシのあるうどん。塩辛く海鮮の旨みが立つ、とても台湾らしい一皿です。" },
-    ko: { name: "장두시 굴", sub: "볶음 우동", what: "타이완 발효콩(장두시) 굴 볶음 우동", story: "타이완 남부의 장두시 향에 통통한 굴과 쫄깃한 우동을 빠르게 볶습니다. 짭짤하고 해산물 감칠맛이 강한, 아주 타이완다운 면 요리입니다." }
+    zh: { name: "蔭豉海蚵", sub: "炒烏龍", what: "台式蔭豉鮮蚵炒烏龍", story: "台式蔭豉鮮蚵，炒進烏龍。" },
+    en: { name: "Black Bean Oyster", sub: "Stir-fried Udon", what: "Stir-fried udon with oysters and Taiwanese fermented black bean", story: "Ocean umami wokked into the noodles." },
+    ja: { name: "蔭豉海蚵", sub: "焼きうどん", what: "台湾風豆豉と牡蠣の焼きうどん", story: "海の旨みをしっかり炒め込み。" },
+    ko: { name: "음시 굴", sub: "볶음 우동", what: "대만식 발효콩과 굴 볶음 우동", story: "바다 감칠맛을 면에 볶아 넣음." }
   },
   {
     id: "zhengyun",
     cat: "soup",
     price: 55,
     image: "../images/zhengyun-jizhong.png",
-    zh: { name: "蒸雲雞盅", sub: "蛋豆腐雞湯", what: "蒸蛋豆腐雞湯盅", story: "像雲一樣嫩的蛋豆腐，沉在清雞湯裡。開胃、好入口，適合當第一口。" },
-    en: { name: "Steamed Cloud Cup", sub: "Egg-Tofu Chicken Soup", what: "Steamed egg tofu in light chicken broth", story: "Cloud-soft egg tofu in a clear chicken broth. Gentle and comforting—a good first sip." },
-    ja: { name: "蒸し雲の鶏盅", sub: "卵豆腐の鶏スープ", what: "卵豆腐の蒸し鶏スープ", story: "雲のようにやわらかい卵豆腐が、澄んだ鶏スープに。やさしくて飲みやすい、最初の一口向きです。" },
-    ko: { name: "찐 구름 닭탕", sub: "계란두부 닭국", what: "계란두부 맑은 닭국", story: "구름처럼 부드러운 계란두부가 맑은 닭국에 담깁니다. 부담 없고 입맛 돋우는, 첫 입에 좋은 국물입니다." }
+    zh: { name: "蒸雲雞盅", sub: "蛋豆腐雞湯", what: "蛋香蒸雞盅湯", story: "蛋香蒸湯，溫熱補一口。" },
+    en: { name: "Steamed Cloud Chicken", sub: "Egg Tofu Chicken Soup", what: "Steamed chicken soup with egg tofu", story: "Warm, gentle, comforting." },
+    ja: { name: "蒸雲鶏盅", sub: "卵豆腐鶏湯", what: "卵豆腐入りの蒸し鶏スープ", story: "やさしく温まる一杯。" },
+    ko: { name: "증운 닭중", sub: "계란두부 닭국", what: "계란두부 찜 닭국", story: "따뜻하고 부드러운 한 모금." }
   },
   {
     id: "shanshu",
     cat: "soup",
     price: 60,
     image: "../images/shanshu-zhusheng.png",
-    zh: { name: "山蔬竹笙盅", sub: "香菇竹笙湯", what: "香菇竹笙蔬菜盅湯", story: "竹笙與香菇的清甜，湯色淡、味道穩。給想喝一口「山上青菜」感的人。" },
-    en: { name: "Mountain Veg Bamboo Puff", sub: "Mushroom & Bamboo Fungus Soup", what: "Light soup with mushrooms and bamboo fungus", story: "Clean sweetness from mushrooms and bamboo fungus. Pale broth, steady flavor—like a quiet taste of the hills." },
-    ja: { name: "山菜竹笙盅", sub: "椎茸と竹笙のスープ", what: "きのこ竹笙のクリアスープ", story: "竹笙ときのこの清らかな甘み。色は淡く、味は落ち着き。山の野菜を思わせる一杯です。" },
-    ko: { name: "산채 죽생 탕", sub: "표고·죽생 국", what: "표고버섯과 죽생 맑은국", story: "죽생과 표고의 담백한 단맛. 국물은 옅고 맛은 차분합니다. 산속 채소 느낌이 나는 한 그릇입니다." }
+    zh: { name: "山蔬竹笙盅", sub: "香菇竹笙湯", what: "清爽香菇竹笙蒸湯", story: "清爽菇筍，素食友善。" },
+    en: { name: "Mountain Veg Bamboo Pith", sub: "Mushroom Bamboo Soup", what: "Light mushroom and bamboo pith steamed soup", story: "Fresh, vegetarian-friendly." },
+    ja: { name: "山蔬竹笙盅", sub: "香菇竹笙湯", what: "きのこ竹笙の蒸しスープ", story: "さっぱり、ベジ対応。" },
+    ko: { name: "산소 죽생중", sub: "버섯 죽순국", what: "버섯·죽순 찜국", story: "담백하고 채식 친화적." }
   },
   {
     id: "suansiang",
     cat: "soup",
     price: 85,
     image: "../images/suansiang-geli.png",
-    zh: { name: "蒜香蛤蜊盅", sub: "蛤蜊蒸湯", what: "蒜香蛤蜊蒸湯盅", story: "蛤蜊鮮甜，蒜香提味。湯不多、但很想再喝一口。" },
-    en: { name: "Garlic Clam Cup", sub: "Steamed Clam Soup", what: "Steamed clam soup with garlic", story: "Sweet clam broth lifted with garlic. Not a huge bowl—just enough to want one more sip." },
-    ja: { name: "にんにくアサリ盅", sub: "アサリの蒸しスープ", what: "にんにく香るアサリ蒸しスープ", story: "アサリの甘みににんにく。量は多くないけれど、もう一口ほしくなるスープです。" },
-    ko: { name: "마늘 조개 탕", sub: "조개 찜국", what: "마늘 향 조개 찜국", story: "조개의 단맛에 마늘 향을 더합니다. 양은 많지 않아도, 한 모금 더 생각나는 국물입니다." }
+    zh: { name: "蒜香蛤蜊盅", sub: "蛤蜊蒸湯", what: "蒜香蛤蜊蒸湯", story: "蒜香蛤蜊，蒸到開口。" },
+    en: { name: "Garlic Clam Cup", sub: "Steamed Clam Soup", what: "Garlic steamed clam soup", story: "Clams opened over aromatic steam." },
+    ja: { name: "蒜香蛤蜊盅", sub: "あさり蒸しスープ", what: "ニンニク香るあさりの蒸しスープ", story: "口を開けた瞬間が旬のしるし。" },
+    ko: { name: "마늘 바지락중", sub: "바지락 찜국", what: "마늘 바지락 찜국", story: "껍질이 벌어질 때까지 쪄낸 향." }
   },
   {
     id: "tangxin",
     cat: "side",
     price: 30,
     image: "../images/tangxin-dan.png",
-    zh: { name: "半熟溏心", sub: "蛋", what: "半熟溏心蛋", story: "蛋白凝固、蛋心流動。切開自己配飯或配肉。" },
-    en: { name: "Jammy Soft Egg", sub: "Egg", what: "Soft-boiled egg with a jammy yolk", story: "Set white, flowing yolk. Slice it over rice or meat." },
-    ja: { name: "半熟とろり卵", sub: "卵", what: "半熟卵", story: "白身は固まり、黄身はとろり。ごはんやお肉に添えて。" },
-    ko: { name: "반숙 탕심란", sub: "계란", what: "반숙란", story: "흰자는 익고 노른자는 흐르는 반숙. 밥이나 고기 위에 올려 드세요." }
+    zh: { name: "半熟溏心", sub: "蛋", what: "半熟溏心蛋", story: "溏心剛好，配飯配麵。" },
+    en: { name: "Jammy Soft Egg", sub: "Egg", what: "Soft jammy egg", story: "Perfect with rice or noodles." },
+    ja: { name: "半熟溏心", sub: "卵", what: "半熟味玉風", story: "ご飯にも麺にも合うとろ〜り黄身。" },
+    ko: { name: "반숙 탕심", sub: "계란", what: "반숙 계란", story: "밥이든 면이든 잘 어울리는 노른자." }
   },
   {
     id: "ziwu",
     cat: "side",
     price: 30,
     image: "../images/ri-chang-ziwu.png",
-    zh: { name: "日常漬物", sub: "小菜", what: "店內日常醃漬小菜", story: "酸脆解膩，每桌都適合來一碟。" },
-    en: { name: "Everyday Pickles", sub: "Side", what: "House pickles", story: "Bright and crunchy—cuts through rich dishes. One dish for the table." },
-    ja: { name: "日常の漬物", sub: "小菜", what: "店仕込みの漬物", story: "酸っぱくて歯ごたえあり。脂っこさをリセット。食卓に一皿。" },
-    ko: { name: "일상 절임", sub: "반찬", what: "가게 일상 절임 반찬", story: "새콤아삭해서 기름진 맛을 잡아줍니다. 테이블에 한 접시." }
+    zh: { name: "日常漬物", sub: "小菜", what: "店內日常漬物", story: "酸香解膩，定食配角。" },
+    en: { name: "Daily Pickles", sub: "Side", what: "House pickles", story: "Bright acidity to cut richness beside your set." },
+    ja: { name: "日常漬物", sub: "小菜", what: "店仕込みの漬け物", story: "定食の油を切る名脇役。" },
+    ko: { name: "일상 절임", sub: "반찬", what: "하우스 피클", story: "정식의 기름기를 덜어주는 산뜻함." }
   },
   {
     id: "huanggua",
     cat: "side",
     price: 35,
     image: "../images/qingshuang-huanggua.png",
-    zh: { name: "青爽黃瓜", sub: "涼拌", what: "涼拌黃瓜", story: "拍打黃瓜的清爽，蒜香微辣，夏天也吃得下去。" },
-    en: { name: "Cool Cucumber", sub: "Cold Salad", what: "Smashed cucumber salad", story: "Crisp smashed cucumber with garlic and a light kick—refreshing even in heat." },
-    ja: { name: "青々きゅうり", sub: "和え物", what: "たたききゅうりの和え物", story: "たたいたきゅうりの爽やかさに、にんにくとほんのり辛み。暑い日にも。" },
-    ko: { name: "청량 오이", sub: "냉채", what: "마늘 오이 냉채", story: "두드려 아삭한 오이에 마늘과 살짝 매운맛. 더운 날에도 시원합니다." }
+    zh: { name: "青爽黃瓜", sub: "涼拌", what: "涼拌青瓜", story: "凉拌黃瓜，清爽收尾。" },
+    en: { name: "Crisp Cucumber", sub: "Cold Salad", what: "Chilled cucumber salad", story: "Crisp, clean finish." },
+    ja: { name: "青爽黄瓜", sub: "凉拌", what: "きゅうりサラダ", story: "シャキッと締める一皿。" },
+    ko: { name: "청상 오이", sub: "냉채", what: "오이 냉채", story: "아삭하고 깔끔한 마무리." }
   },
   {
     id: "bento-lurou",
@@ -165,10 +165,10 @@ window.PINGRI_DISHES = [
     cat: "bento",
     price: 165,
     image: "../images/tanhuo-shaorou-bento.png",
-    zh: { name: "炭火燒肉", sub: "便當（升級）", what: "炭火燒肉升級便當", story: "比滷肉再升級一點的燒肉便當，外帶也能吃得有存在感。" },
-    en: { name: "Charcoal Roast Meat", sub: "Bento (Upgrade)", what: "Upgraded charcoal-roast meat bento", story: "A step up from classic pork rice—roast meat with more presence, still takeout-ready." },
-    ja: { name: "炭火焼肉", sub: "弁当（アップ）", what: "炭火焼肉アップ弁当", story: "ルーローより一段アップの焼肉弁当。持ち帰りでも存在感あり。" },
-    ko: { name: "숯불 구이 고기", sub: "도시락(업그레이드)", what: "숯불 구이 업그레이드 도시락", story: "루로우보다 한 단계 업한 구이 도시락. 포장으로도 존재감 있습니다." }
+    zh: { name: "炭火燒肉", sub: "便當（升級）", what: "醬燒肉片外帶便當", story: "醬燒肉片，外帶升級。" },
+    en: { name: "Charcoal Glazed Pork", sub: "Bento (Upgrade)", what: "Char-sauced pork bento upgrade", story: "Glazed slices for takeout." },
+    ja: { name: "炭火焼肉", sub: "弁当（アップグレード）", what: "炭火風のタレ焼き肉弁当", story: "持ち帰り向けの満足感。" },
+    ko: { name: "숯불 구이", sub: "도시락(업그레이드)", what: "숯불 풍 양념 돼지고기 도시락", story: "포장용으로 든든한 한 끼." }
   }
 ];
 
