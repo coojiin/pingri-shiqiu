@@ -12,6 +12,7 @@
     --ink:#2a2622; --soft:#6e655c; --clay:#c4a090; --seal:#b86a5c; --white:#fbf8f2; --line:#cfc4b4;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
   body{font-family:"Noto Sans TC","Noto Sans JP","Noto Sans KR",sans-serif;background:var(--paper);color:var(--ink);line-height:1.7}
   .wrap{width:min(960px,100%);margin:0 auto;padding:0 20px}
   header.bar{
@@ -32,7 +33,8 @@
   .back{display:inline-block;margin-top:14px;font-size:13px;color:var(--sage-d);border-bottom:1px solid var(--sage)}
   .cat{font-family:"Noto Serif TC",serif;font-size:15px;letter-spacing:.2em;color:var(--sage-d);margin:28px 0 12px}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding-bottom:48px}
-  .card{background:var(--white);border:1px solid var(--sand);overflow:hidden;display:flex;flex-direction:column}
+  .card{background:var(--white);border:1px solid var(--sand);overflow:hidden;display:flex;flex-direction:column;scroll-margin-top:72px}
+  .card:target{outline:2px solid var(--sage);outline-offset:2px}
   .ph{aspect-ratio:4/3;background:linear-gradient(145deg,#ebe4d6,#ddd3c2);position:relative}
   .ph img{width:100%;height:100%;object-fit:cover;display:block}
   .ph .soon{
@@ -51,7 +53,7 @@
 <body>
 <header class="bar">
   <div class="wrap bar-inner">
-    <a href="../index.html"><img class="logo" src="../brand/logo-soft-color.png" alt="平日食器" /></a>
+    <a id="logoLink" href="../index.html"><img class="logo" src="../brand/logo-soft-color.png" alt="平日食器" /></a>
     <div class="langs" id="langs" role="group" aria-label="Language"></div>
   </div>
 </header>
@@ -72,10 +74,31 @@ const LANGS = [
   { code: "ja", label: "日本語" },
   { code: "ko", label: "한국어" }
 ];
-let lang = localStorage.getItem("pingri_lang") || "zh";
-if (!PINGRI_I18N[lang]) lang = "zh";
+
+function readLang() {
+  const q = new URLSearchParams(location.search).get("lang");
+  if (q && PINGRI_I18N[q]) return q;
+  const stored = localStorage.getItem("pingri_lang");
+  if (stored && PINGRI_I18N[stored]) return stored;
+  return "zh";
+}
+
+let lang = readLang();
 
 function t() { return PINGRI_I18N[lang]; }
+
+function homeHref() {
+  return "../index.html?lang=" + encodeURIComponent(lang);
+}
+
+function syncUrl(replace) {
+  const u = new URL(location.href);
+  u.searchParams.set("lang", lang);
+  const hash = location.hash || "";
+  const next = u.pathname + "?" + u.searchParams.toString() + hash;
+  if (replace) history.replaceState(null, "", next);
+  else history.pushState(null, "", next);
+}
 
 function renderLangs() {
   document.getElementById("langs").innerHTML = LANGS.map(l =>
@@ -89,8 +112,12 @@ function render() {
   document.title = ui.pageTitle + "｜" + ui.brand;
   document.getElementById("title").textContent = ui.pageTitle;
   document.getElementById("lead").textContent = ui.lead;
-  document.getElementById("back").textContent = ui.back;
+  const back = document.getElementById("back");
+  back.textContent = ui.back;
+  back.href = homeHref();
+  document.getElementById("logoLink").href = homeHref();
   document.getElementById("foot").textContent = ui.brand + " · Pingri Shiqiu";
+  localStorage.setItem("pingri_lang", lang);
 
   const order = ["signature","don","noodle","soup","side","bento"];
   const root = document.getElementById("list");
@@ -100,7 +127,7 @@ function render() {
     const cards = dishes.map(d => {
       const L = d[lang] || d.zh;
       const img = d.image
-        ? `<img src="${d.image}" alt="${L.name}" loading="lazy" />`
+        ? `<img src="${d.image}" alt="${L.name}｜${L.sub}" loading="lazy" />`
         : `<div class="soon">${ui.pendingPhoto}</div>`;
       return `<article class="card" id="${d.id}">
         <div class="ph">${img}</div>
@@ -118,15 +145,32 @@ function render() {
   renderLangs();
 }
 
+function scrollToHash() {
+  const id = (location.hash || "").replace(/^#/, "");
+  if (!id) return;
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 document.getElementById("langs").addEventListener("click", (e) => {
   const b = e.target.closest("button[data-lang]");
   if (!b) return;
   lang = b.dataset.lang;
   localStorage.setItem("pingri_lang", lang);
+  syncUrl(false);
   render();
+  scrollToHash();
 });
 
+window.addEventListener("popstate", () => {
+  lang = readLang();
+  render();
+  scrollToHash();
+});
+
+syncUrl(true);
 render();
+requestAnimationFrame(() => setTimeout(scrollToHash, 50));
 </script>
 </body>
 </html>

@@ -6,28 +6,28 @@
 <!-- Landing v2 — 淡雅專業餐飲官網 -->
 <link rel="icon" type="image/png" href="brand/favicon.png" />
 <title>平日食器｜台式融合定食</title>
-<meta name="description" content="平日快速的台式×日式新定食。家常味重新組裝。林口長庚／福樺水悅商圈。" />
+<meta name="description" id="metaDesc" content="平日快速的台式×日式新定食。家常味重新組裝。林口長庚／福樺水悅商圈。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&family=Noto+Sans+JP:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --paper: #f4f0e8;       /* 宣紙米 */
+    --paper: #f4f0e8;
     --paper-2: #ebe4d8;
-    --sand: #d9cfc0;        /* 暖沙 */
-    --sage: #7a9084;        /* 鼠尾草绿 */
+    --sand: #d9cfc0;
+    --sage: #7a9084;
     --sage-deep: #5f7569;
-    --ink: #2a2622;         /* 炭黑偏軟 */
+    --ink: #2a2622;
     --ink-soft: #6e655c;
-    --clay: #c4a090;        /* 淡陶土粉 */
-    --seal: #b86a5c;        /* 印泥紅點綴 */
+    --clay: #c4a090;
+    --seal: #b86a5c;
     --line: #cfc4b4;
     --white: #fbf8f2;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    font-family: "Noto Sans TC", "Noto Sans JP", "Noto Sans KR", "PingFang TC", "Microsoft JhengHei", sans-serif;
     background: var(--paper);
     color: var(--ink);
     line-height: 1.75;
@@ -49,7 +49,6 @@
     z-index: 1;
   }
 
-  /* Nav */
   header.site {
     position: sticky; top: 0; z-index: 40;
     background: rgba(244, 240, 232, 0.92);
@@ -59,9 +58,10 @@
   header.site.on { border-bottom-color: var(--line); }
   .nav {
     display: flex; align-items: center; justify-content: space-between;
-    height: 76px; gap: 20px;
+    height: 76px; gap: 16px;
   }
   .nav-logo { height: 46px; width: auto; max-width: 280px; object-fit: contain; }
+  .nav-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
   .nav-links {
     display: flex; gap: 22px; flex-wrap: wrap;
     font-size: 13px; font-weight: 400; letter-spacing: 0.12em; color: var(--ink-soft);
@@ -74,8 +74,17 @@
     padding: 8px 14px;
   }
   .nav-cta:hover { background: var(--sage); color: var(--white); }
+  .langs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .langs button {
+    border: 1px solid var(--sand); background: var(--white);
+    padding: 6px 10px; font: inherit; font-size: 12px;
+    letter-spacing: 0.06em; cursor: pointer; color: var(--ink-soft);
+  }
+  .langs button.on {
+    border-color: var(--sage); color: var(--sage-deep);
+    background: rgba(122, 144, 132, 0.12);
+  }
 
-  /* Hero */
   .hero { padding: 48px 0 0; position: relative; z-index: 1; }
   .hero-grid {
     display: grid;
@@ -121,7 +130,6 @@
     display: flex; justify-content: space-between;
   }
 
-  /* Sections */
   section.block { padding: 88px 0; position: relative; z-index: 1; }
   section.tint { background: rgba(235, 228, 216, 0.45); }
   .sec-label {
@@ -142,7 +150,6 @@
     width: 48px; height: 2px; background: var(--clay); margin: 0 0 28px;
   }
 
-  /* Brand */
   .brand-grid {
     display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: start;
   }
@@ -157,7 +164,6 @@
   }
   .note p { font-size: 14px; font-weight: 300; color: var(--ink-soft); }
 
-  /* Store / space */
   .space-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
   }
@@ -172,20 +178,27 @@
     font-size: 14px; letter-spacing: 0.14em;
   }
   .space-card .cap span {
-    display: block; font-family: "Noto Sans TC", sans-serif;
+    display: block; font-family: "Noto Sans TC", "Noto Sans JP", "Noto Sans KR", sans-serif;
     font-size: 12px; font-weight: 300; color: var(--ink-soft);
     letter-spacing: 0.06em; margin-top: 4px;
   }
 
-  /* Signature */
   .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-  .sig-card { background: var(--white); border: 1px solid var(--sand); }
+  a.sig-card {
+    background: var(--white); border: 1px solid var(--sand);
+    display: block; transition: border-color .18s, box-shadow .18s, transform .18s;
+  }
+  a.sig-card:hover {
+    border-color: var(--sage);
+    box-shadow: 0 8px 24px rgba(42, 38, 34, 0.08);
+    transform: translateY(-2px);
+  }
   .sig-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
   .sig-body { padding: 18px 20px 22px; display: flex; justify-content: space-between; align-items: end; gap: 12px; }
   .sig-name { font-family: "Noto Serif TC", serif; font-size: 22px; letter-spacing: 0.12em; }
   .sig-sub { font-size: 13px; color: var(--ink-soft); margin-top: 4px; letter-spacing: 0.08em; }
   .sig-price { font-family: "Noto Serif TC", serif; font-size: 20px; color: var(--seal); }
-
+  .sig-about { font-size: 12px; color: var(--sage-deep); letter-spacing: 0.06em; margin-top: 8px; }
 
   .menu-highlight {
     display: grid;
@@ -196,6 +209,11 @@
     border: 1px solid var(--sand);
     padding: 12px;
     margin-bottom: 20px;
+    transition: border-color .18s, box-shadow .18s;
+  }
+  a.menu-highlight:hover {
+    border-color: var(--sage);
+    box-shadow: 0 6px 20px rgba(42, 38, 34, 0.07);
   }
   .menu-highlight img {
     width: 100%;
@@ -210,11 +228,11 @@
   }
   .menu-highlight .mh-sub { font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
   .menu-highlight .mh-price { font-family: "Noto Serif TC", serif; color: var(--seal); font-size: 20px; margin-top: 10px; }
+  .menu-highlight .mh-about { font-size: 12px; color: var(--sage-deep); margin-top: 8px; letter-spacing: 0.06em; }
   @media (max-width: 820px) {
     .menu-highlight { grid-template-columns: 1fr; }
   }
 
-  /* Menu — one section, not whole site */
   .menu-panel {
     background: var(--white);
     border: 1px solid var(--sand);
@@ -227,16 +245,24 @@
     margin: 26px 0 8px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
   }
   .menu-cols > div > .menu-cat:first-child { margin-top: 0; }
-  .menu-row {
-    display: grid; grid-template-columns: 1fr auto; gap: 12px;
-    padding: 12px 0; border-bottom: 1px dotted var(--line); align-items: baseline;
+  a.menu-row {
+    display: grid; grid-template-columns: 1fr auto auto; gap: 12px;
+    padding: 12px 8px; margin: 0 -8px; border-bottom: 1px dotted var(--line); align-items: baseline;
+    border-radius: 2px; transition: background .15s, color .15s;
   }
-  .menu-row:last-child { border-bottom: none; }
+  a.menu-row:last-child { border-bottom: none; }
+  a.menu-row:hover {
+    background: rgba(122, 144, 132, 0.1);
+  }
+  a.menu-row:hover .m-about { color: var(--sage-deep); }
   .m-name { font-family: "Noto Serif TC", serif; font-size: 16px; letter-spacing: 0.08em; }
   .m-sub { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
   .m-price { font-size: 15px; color: var(--ink); font-weight: 500; }
+  .m-about {
+    font-size: 11px; color: var(--ink-soft); letter-spacing: 0.04em;
+    white-space: nowrap; align-self: center;
+  }
 
-  /* Takeout */
   .take-grid {
     display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; margin-bottom: 28px;
   }
@@ -254,7 +280,6 @@
   .point p, .point li { font-size: 13px; font-weight: 300; color: var(--ink-soft); line-height: 1.75; }
   .point ul { padding-left: 1em; }
 
-  /* Location */
   .loc-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 0;
     border: 1px solid var(--sand); background: var(--white);
@@ -300,6 +325,8 @@
     .space-card:nth-child(2) { margin-top: 0; }
     .loc-grid > div:first-child { border-right: none; border-bottom: 1px solid var(--line); }
     section.block { padding: 64px 0; }
+    a.menu-row { grid-template-columns: 1fr auto; }
+    .m-about { display: none; }
   }
 </style>
 </head>
@@ -307,16 +334,11 @@
   <header class="site" id="siteHeader">
     <div class="wrap nav">
       <a href="#top"><img class="nav-logo" src="brand/logo-soft-color.png" alt="平日食器" /></a>
-      <nav class="nav-links" aria-label="主要">
-        <a href="#brand">品牌</a>
-        <a href="#space">店景</a>
-        <a href="#sig">招牌</a>
-        <a href="#menu">菜單</a>
-        <a href="dishes/index.html">菜品故事</a>
-        <a href="#takeout">外帶</a>
-        <a href="#location">地點</a>
-      </nav>
-      <a class="nav-cta" href="#menu">看菜單</a>
+      <div class="nav-right">
+        <nav class="nav-links" id="navLinks" aria-label="主要"></nav>
+        <div class="langs" id="langs" role="group" aria-label="Language"></div>
+        <a class="nav-cta" id="navCta" href="#menu">看菜單</a>
+      </div>
     </div>
   </header>
 
@@ -324,19 +346,19 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
-          <p class="kicker">平日食器</p>
-          <h1>平日快速的台式×日式新定食</h1>
-          <p class="lead">家常味重新組裝，不是熱炒、不是純日料。給林口長庚／福樺水悅商圈，好好吃一頓平日飯。</p>
+          <p class="kicker" id="kicker">平日食器</p>
+          <h1 id="heroTitle">平日快速的台式×日式新定食</h1>
+          <p class="lead" id="heroLead"></p>
           <div class="hero-actions">
-            <a class="btn btn-sage" href="#menu">看菜單</a>
-            <a class="btn btn-line" href="#takeout">外帶說明</a>
-            <a class="btn btn-ghost" href="#location">地點</a>
+            <a class="btn btn-sage" id="ctaMenu" href="#menu">看菜單</a>
+            <a class="btn btn-line" id="ctaTakeout" href="#takeout">外帶說明</a>
+            <a class="btn btn-ghost" id="ctaLoc" href="#location">地點</a>
           </div>
-          <p class="hero-meta">選址籌備中｜地址即將公布</p>
+          <p class="hero-meta" id="heroMeta"></p>
         </div>
         <figure class="hero-photo">
-          <img src="brand/store-exterior.png" alt="平日食器店面外觀" />
-          <figcaption class="cap"><span>店景</span><span>裝潢後外觀</span></figcaption>
+          <img src="brand/store-exterior.png" alt="平日食器店面外觀" id="heroImg" />
+          <figcaption class="cap"><span id="heroCapL">店景</span><span id="heroCapR">裝潢後外觀</span></figcaption>
         </figure>
       </div>
     </section>
@@ -344,19 +366,19 @@
     <section class="block tint" id="brand">
       <div class="wrap brand-grid">
         <div>
-          <p class="sec-label">品牌</p>
-          <h2 class="sec-title">關於平日食器</h2>
+          <p class="sec-label" id="brandLabel">品牌</p>
+          <h2 class="sec-title" id="brandTitle">關於平日食器</h2>
           <div class="divider"></div>
-          <p class="sec-lead" style="margin-bottom:0">我們把台式家常味做成定食與丼：出餐俐落，適合平日好好吃飯。菜名可以文藝一點，點餐仍然一眼看懂。</p>
+          <p class="sec-lead" id="brandLead" style="margin-bottom:0"></p>
         </div>
         <div class="brand-notes">
           <div class="note">
-            <h3>台式 × 日式</h3>
-            <p>溫暖清楚、好點好走。宣紙感與鼠尾草配色，文藝但不難懂。</p>
+            <h3 id="note1Title"></h3>
+            <p id="note1Body"></p>
           </div>
           <div class="note">
-            <h3>主名＋副標</h3>
-            <p>塔香一丼就是三杯雞，味噌巷口就是滷肉飯——點餐一眼看懂。</p>
+            <h3 id="note2Title"></h3>
+            <p id="note2Body"></p>
           </div>
         </div>
       </div>
@@ -364,18 +386,18 @@
 
     <section class="block" id="space">
       <div class="wrap">
-        <p class="sec-label">店景</p>
-        <h2 class="sec-title">空間與氛圍</h2>
+        <p class="sec-label" id="spaceLabel">店景</p>
+        <h2 class="sec-title" id="spaceTitle">空間與氛圍</h2>
         <div class="divider"></div>
-        <p class="sec-lead">紙感米白、暖沙與鼠尾草，像走進一間安靜的平日食堂。</p>
+        <p class="sec-lead" id="spaceLead"></p>
         <div class="space-grid">
           <figure class="space-card">
-            <img src="brand/store-exterior.png" alt="店面外觀" />
-            <figcaption class="cap">店面外觀<span>林口長庚／福樺水悅商圈（裝潢後｜地址籌備公布）</span></figcaption>
+            <img src="brand/store-exterior.png" alt="" id="spaceExtImg" />
+            <figcaption class="cap" id="spaceExtCap"></figcaption>
           </figure>
           <figure class="space-card">
-            <img src="brand/store-interior.png" alt="店內空間" />
-            <figcaption class="cap">店內<span>留白乾淨，適合平日坐下吃飯</span></figcaption>
+            <img src="brand/store-interior.png" alt="" id="spaceIntImg" />
+            <figcaption class="cap" id="spaceIntCap"></figcaption>
           </figure>
         </div>
       </div>
@@ -383,128 +405,62 @@
 
     <section class="block tint" id="sig">
       <div class="wrap">
-        <p class="sec-label">招牌</p>
-        <h2 class="sec-title">先記住兩道</h2>
+        <p class="sec-label" id="sigLabel">招牌</p>
+        <h2 class="sec-title" id="sigTitle">先記住兩道</h2>
         <div class="divider"></div>
-        <p class="sec-lead">招牌兩道，再往下逛完整菜單。</p>
-        <div class="sig-grid">
-          <article class="sig-card">
-            <img src="images/taxiang-yidon.png" alt="塔香一丼｜三杯雞" />
-            <div class="sig-body">
-              <div>
-                <div class="sig-name">塔香一丼</div>
-                <div class="sig-sub">三杯雞</div>
-              </div>
-              <div class="sig-price">$170</div>
-            </div>
-          </article>
-          <article class="sig-card">
-            <img src="images/weicen-xiangko.png" alt="味噌巷口｜滷肉飯" />
-            <div class="sig-body">
-              <div>
-                <div class="sig-name">味噌巷口</div>
-                <div class="sig-sub">滷肉飯</div>
-              </div>
-              <div class="sig-price">$165</div>
-            </div>
-          </article>
-        </div>
+        <p class="sec-lead" id="sigLead"></p>
+        <div class="sig-grid" id="sigGrid"></div>
       </div>
     </section>
 
     <section class="block" id="menu">
       <div class="wrap">
-        <p class="sec-label">菜單</p>
-        <h2 class="sec-title">完整菜單</h2>
+        <p class="sec-label" id="menuLabel">菜單</p>
+        <h2 class="sec-title" id="menuTitle">完整菜單</h2>
         <div class="divider"></div>
-        <p class="sec-lead">主名＋副標＋價格。想看每道菜是什麼、多語說明（中／英／日／韓），請看 <a href="dishes/index.html" style="color:var(--sage-deep);border-bottom:1px solid var(--sage)">菜品故事</a>。</p>
-                <div class="menu-highlight">
-          <img src="images/hongshao-tangyun.png" alt="紅燒湯韻｜牛肉拉麵" />
-          <div>
-            <div class="mh-name">紅燒湯韻</div>
-            <div class="mh-sub">牛肉拉麵 · 菜單 v1.1</div>
-            <div class="mh-price">$220</div>
-          </div>
-        </div>
+        <p class="sec-lead" id="menuLead"></p>
+        <div id="menuHighlight"></div>
         <div class="menu-panel">
-          <div class="menu-cols">
-            <div>
-              <h3 class="menu-cat">定食／丼</h3>
-              <div class="menu-row"><div><div class="m-name">蔥鹽午後</div><div class="m-sub">雞腿丼</div></div><div class="m-price">165</div></div>
-              <div class="menu-row"><div><div class="m-name">麻香紅油</div><div class="m-sub">豆腐丼</div></div><div class="m-price">155</div></div>
-              <div class="menu-row"><div><div class="m-name">蒜火慢烤</div><div class="m-sub">排骨定食</div></div><div class="m-price">190</div></div>
-              <div class="menu-row"><div><div class="m-name">照燒厚切</div><div class="m-sub">豬排飯</div></div><div class="m-price">200</div></div>
-              <h3 class="menu-cat">麵／炒</h3>
-              <div class="menu-row"><div><div class="m-name">蔥油細浪</div><div class="m-sub">雞絲麵</div></div><div class="m-price">160</div></div>
-              <div class="menu-row"><div><div class="m-name">紅燒湯韻</div><div class="m-sub">牛肉拉麵</div></div><div class="m-price">220</div></div>
-              <div class="menu-row"><div><div class="m-name">蔭豉海蚵</div><div class="m-sub">炒烏龍</div></div><div class="m-price">220</div></div>
-            </div>
-            <div>
-              <h3 class="menu-cat">蒸湯</h3>
-              <div class="menu-row"><div><div class="m-name">蒸雲雞盅</div><div class="m-sub">蛋豆腐雞湯</div></div><div class="m-price">55</div></div>
-              <div class="menu-row"><div><div class="m-name">山蔬竹笙盅</div><div class="m-sub">香菇竹笙湯</div></div><div class="m-price">60</div></div>
-              <div class="menu-row"><div><div class="m-name">蒜香蛤蜊盅</div><div class="m-sub">蛤蜊蒸湯</div></div><div class="m-price">85</div></div>
-              <h3 class="menu-cat">小菜</h3>
-              <div class="menu-row"><div><div class="m-name">半熟溏心</div><div class="m-sub">蛋</div></div><div class="m-price">30</div></div>
-              <div class="menu-row"><div><div class="m-name">日常漬物</div><div class="m-sub">小菜</div></div><div class="m-price">30</div></div>
-              <div class="menu-row"><div><div class="m-name">青爽黃瓜</div><div class="m-sub">涼拌</div></div><div class="m-price">35</div></div>
-              <h3 class="menu-cat">外帶便當</h3>
-              <div class="menu-row"><div><div class="m-name">巷口滷肉</div><div class="m-sub">便當</div></div><div class="m-price">160</div></div>
-              <div class="menu-row"><div><div class="m-name">炭火燒肉</div><div class="m-sub">便當（升級）</div></div><div class="m-price">165</div></div>
-            </div>
-          </div>
+          <div class="menu-cols" id="menuCols"></div>
         </div>
       </div>
     </section>
 
     <section class="block tint" id="takeout">
       <div class="wrap">
-        <p class="sec-label">外帶</p>
-        <h2 class="sec-title">平日外帶</h2>
+        <p class="sec-label" id="takeLabel">外帶</p>
+        <h2 class="sec-title" id="takeTitle">平日外帶</h2>
         <div class="divider"></div>
-        <p class="sec-lead">午晚尖峰為主。定食可內用，便當主打外帶；也適合陪病／輪班補給。</p>
-        <div class="take-grid">
-          <figure class="space-card">
-            <img src="images/xiangko-lurou-bento.png" alt="巷口滷肉便當" />
-            <figcaption class="cap">巷口滷肉便當<span>$160</span></figcaption>
-          </figure>
-          <figure class="space-card">
-            <img src="images/cong-yan-wuhou.png" alt="蔥鹽午後雞腿丼" />
-            <figcaption class="cap">蔥鹽午後・雞腿丼<span>$165</span></figcaption>
-          </figure>
-          <figure class="space-card">
-            <img src="images/hongshao-tangyun.png" alt="紅燒湯韻｜牛肉拉麵" />
-            <figcaption class="cap">紅燒湯韻・牛肉拉麵<span>$220</span></figcaption>
-          </figure>
-        </div>
+        <p class="sec-lead" id="takeLead"></p>
+        <div class="take-grid" id="takeGrid"></div>
         <div class="take-points">
-          <div class="point"><h3>平日快速</h3><p>結構清楚、出餐動線短，適合午休與下班一餐。</p></div>
-          <div class="point"><h3>外帶／麵食重點</h3><ul><li>巷口滷肉便當 $160</li><li>炭火燒肉便當（升級）$165</li><li>紅燒湯韻牛肉拉麵 $220</li></ul></div>
-          <div class="point"><h3>點餐方式</h3><p>官網先看菜單；線上點餐／外送上線後補上。</p></div>
+          <div class="point"><h3 id="takePt1Title"></h3><p id="takePt1Body"></p></div>
+          <div class="point"><h3 id="takePt2Title"></h3><ul id="takePt2List"></ul></div>
+          <div class="point"><h3 id="takePt3Title"></h3><p id="takePt3Body"></p></div>
         </div>
       </div>
     </section>
 
     <section class="block" id="location">
       <div class="wrap">
-        <p class="sec-label">地點</p>
-        <h2 class="sec-title">來店與開幕通知</h2>
+        <p class="sec-label" id="locLabel">地點</p>
+        <h2 class="sec-title" id="locTitle">來店與開幕通知</h2>
         <div class="divider"></div>
         <div class="loc-grid">
           <div>
-            <p class="addr">林口長庚／福樺水悅商圈</p>
-            <p class="hint">籌備／試營運資訊即將公布｜地址即將公布</p>
-            <span class="pill">即將開幕</span>
+            <p class="addr" id="locAddr"></p>
+            <p class="hint" id="locHint"></p>
+            <span class="pill" id="locPill"></span>
           </div>
           <div>
-            <p class="sec-lead" style="margin-bottom:12px">留下信箱，開幕與試營運時通知你。（占位，尚未接後端）</p>
-            <form class="notify" onsubmit="event.preventDefault(); this.querySelector('.form-note').textContent='已記錄（示範）。正式上線後會接真實通知。';">
+            <p class="sec-lead" id="locFormLead" style="margin-bottom:12px"></p>
+            <form class="notify" id="notifyForm">
               <div>
-                <label for="email">信箱</label>
+                <label for="email" id="emailLabel">信箱</label>
                 <input id="email" type="email" placeholder="you@example.com" required />
               </div>
-              <button class="btn btn-sage" type="submit">告訴我開幕了</button>
-              <p class="form-note">占位表單 · 不會真的送出</p>
+              <button class="btn btn-sage" type="submit" id="notifyBtn"></button>
+              <p class="form-note" id="formNote"></p>
             </form>
           </div>
         </div>
@@ -515,14 +471,266 @@
   <footer>
     <div class="wrap">
       <img class="footer-logo" src="brand/logo-soft-color.png" alt="平日食器" />
-      <p>台式融合定食 · 台式×日式定食／丼</p>
+      <p id="footerLine"></p>
       <p style="margin-top:8px">pingrishiqiu.com</p>
     </div>
   </footer>
+  <script src="dishes/dishes-data.js"></script>
   <script>
-    const h = document.getElementById('siteHeader');
-    const on = () => h.classList.toggle('on', scrollY > 6);
-    on(); addEventListener('scroll', on, { passive: true });
+const LANGS = [
+  { code: "zh", label: "中文" },
+  { code: "en", label: "EN" },
+  { code: "ja", label: "日本語" },
+  { code: "ko", label: "한국어" }
+];
+
+function readLang() {
+  const q = new URLSearchParams(location.search).get("lang");
+  if (q && PINGRI_HOME[q]) return q;
+  const stored = localStorage.getItem("pingri_lang");
+  if (stored && PINGRI_HOME[stored]) return stored;
+  return "zh";
+}
+
+let lang = readLang();
+
+function home() { return PINGRI_HOME[lang]; }
+function dishUi() { return PINGRI_I18N[lang]; }
+function L(d) { return d[lang] || d.zh; }
+
+function dishHref(id) {
+  return "dishes/index.html?lang=" + encodeURIComponent(lang) + "#" + id;
+}
+
+function syncUrl(replace) {
+  const u = new URL(location.href);
+  u.searchParams.set("lang", lang);
+  const hash = location.hash || "";
+  const next = u.pathname + "?" + u.searchParams.toString() + hash;
+  if (replace) history.replaceState(null, "", next);
+  else history.pushState(null, "", next);
+}
+
+function byId(id) { return PINGRI_DISHES.find(d => d.id === id); }
+
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+function renderLangs() {
+  document.getElementById("langs").innerHTML = LANGS.map(l =>
+    `<button type="button" data-lang="${l.code}" class="${l.code===lang?"on":""}">${l.label}</button>`
+  ).join("");
+}
+
+function renderNav() {
+  const h = home();
+  const nav = document.getElementById("navLinks");
+  nav.setAttribute("aria-label", h.navAria);
+  nav.innerHTML = [
+    ["#brand", h.nav.brand],
+    ["#space", h.nav.space],
+    ["#sig", h.nav.sig],
+    ["#menu", h.nav.menu],
+    ["dishes/index.html?lang=" + encodeURIComponent(lang), h.nav.dishes],
+    ["#takeout", h.nav.takeout],
+    ["#location", h.nav.location]
+  ].map(([href, label]) => `<a href="${href}">${label}</a>`).join("");
+  setText("navCta", h.ctaMenu);
+}
+
+function renderSig() {
+  const about = dishUi().aboutDish;
+  const ids = ["taxiang", "weixi"];
+  document.getElementById("sigGrid").innerHTML = ids.map(id => {
+    const d = byId(id);
+    const x = L(d);
+    const img = d.image.replace(/^\.\.\//, "");
+    return `<a class="sig-card" href="${dishHref(id)}">
+      <img src="${img}" alt="${x.name}｜${x.sub}" />
+      <div class="sig-body">
+        <div>
+          <div class="sig-name">${x.name}</div>
+          <div class="sig-sub">${x.sub}</div>
+          <div class="sig-about">${about}</div>
+        </div>
+        <div class="sig-price">$${d.price}</div>
+      </div>
+    </a>`;
+  }).join("");
+}
+
+function renderHighlight() {
+  const h = home();
+  const about = dishUi().aboutDish;
+  const d = byId("hongshao");
+  const x = L(d);
+  const img = d.image.replace(/^\.\.\//, "");
+  document.getElementById("menuHighlight").innerHTML =
+    `<a class="menu-highlight" href="${dishHref("hongshao")}">
+      <img src="${img}" alt="${x.name}｜${x.sub}" />
+      <div>
+        <div class="mh-name">${x.name}</div>
+        <div class="mh-sub">${x.sub}${h.mhExtra}</div>
+        <div class="mh-price">$${d.price}</div>
+        <div class="mh-about">${about}</div>
+      </div>
+    </a>`;
+}
+
+function menuRow(d) {
+  const x = L(d);
+  const about = dishUi().aboutDish;
+  return `<a class="menu-row" href="${dishHref(d.id)}">
+    <div><div class="m-name">${x.name}</div><div class="m-sub">${x.sub}</div></div>
+    <div class="m-about">${about}</div>
+    <div class="m-price">${d.price}</div>
+  </a>`;
+}
+
+function renderMenu() {
+  const catsUi = dishUi().cats;
+  const leftOrder = ["don", "noodle"];
+  const rightOrder = ["soup", "side", "bento"];
+  function col(order) {
+    return order.map(cat => {
+      const dishes = PINGRI_DISHES.filter(d => d.cat === cat);
+      if (!dishes.length) return "";
+      return `<h3 class="menu-cat">${catsUi[cat]}</h3>` + dishes.map(menuRow).join("");
+    }).join("");
+  }
+  document.getElementById("menuCols").innerHTML =
+    `<div>${col(leftOrder)}</div><div>${col(rightOrder)}</div>`;
+}
+
+function renderTakeGrid() {
+  const items = [
+    ["bento-lurou", true],
+    ["congian", false],
+    ["hongshao", true]
+  ];
+  // take-grid was 2-col originally with 3 cards — keep 3 cards
+  document.getElementById("takeGrid").innerHTML = items.map(([id]) => {
+    const d = byId(id);
+    const x = L(d);
+    const img = d.image.replace(/^\.\.\//, "");
+    return `<figure class="space-card">
+      <img src="${img}" alt="${x.name}｜${x.sub}" />
+      <figcaption class="cap">${x.name}・${x.sub}<span>$${d.price}</span></figcaption>
+    </figure>`;
+  }).join("");
+
+  const h = home();
+  const bl = byId("bento-lurou");
+  const bs = byId("bento-shaorou");
+  const hs = byId("hongshao");
+  const join = lang === "en" ? " " : "・";
+  document.getElementById("takePt2List").innerHTML = [
+    `<li>${L(bl).name}${join}${L(bl).sub} $${bl.price}</li>`,
+    `<li>${L(bs).name}${join}${L(bs).sub} $${bs.price}</li>`,
+    `<li>${L(hs).name}${join}${L(hs).sub} $${hs.price}</li>`
+  ].join("");
+}
+
+function render() {
+  const h = home();
+  document.documentElement.lang = lang === "zh" ? "zh-Hant" : lang;
+  document.title = h.title;
+  document.getElementById("metaDesc").setAttribute("content", h.description);
+  localStorage.setItem("pingri_lang", lang);
+
+  renderLangs();
+  renderNav();
+
+  setText("kicker", h.kicker);
+  setText("heroTitle", h.heroTitle);
+  setText("heroLead", h.heroLead);
+  setText("ctaMenu", h.ctaMenu);
+  setText("ctaTakeout", h.ctaTakeout);
+  setText("ctaLoc", h.ctaLoc);
+  setText("heroMeta", h.heroMeta);
+  setText("heroCapL", h.heroCapL);
+  setText("heroCapR", h.heroCapR);
+
+  setText("brandLabel", h.brandLabel);
+  setText("brandTitle", h.brandTitle);
+  setText("brandLead", h.brandLead);
+  setText("note1Title", h.note1Title);
+  setText("note1Body", h.note1Body);
+  setText("note2Title", h.note2Title);
+  setText("note2Body", h.note2Body);
+
+  setText("spaceLabel", h.spaceLabel);
+  setText("spaceTitle", h.spaceTitle);
+  setText("spaceLead", h.spaceLead);
+  document.getElementById("spaceExtImg").alt = h.spaceExt;
+  document.getElementById("spaceIntImg").alt = h.spaceInt;
+  document.getElementById("spaceExtCap").innerHTML = `${h.spaceExt}<span>${h.spaceExtSub}</span>`;
+  document.getElementById("spaceIntCap").innerHTML = `${h.spaceInt}<span>${h.spaceIntSub}</span>`;
+
+  setText("sigLabel", h.sigLabel);
+  setText("sigTitle", h.sigTitle);
+  setText("sigLead", h.sigLead);
+  renderSig();
+
+  setText("menuLabel", h.menuLabel);
+  setText("menuTitle", h.menuTitle);
+  const lead = document.getElementById("menuLead");
+  lead.innerHTML = h.menuLeadBefore +
+    `<a href="dishes/index.html?lang=${encodeURIComponent(lang)}" style="color:var(--sage-deep);border-bottom:1px solid var(--sage)">${h.menuLeadLink}</a>` +
+    h.menuLeadAfter;
+  renderHighlight();
+  renderMenu();
+
+  setText("takeLabel", h.takeLabel);
+  setText("takeTitle", h.takeTitle);
+  setText("takeLead", h.takeLead);
+  setText("takePt1Title", h.takePt1Title);
+  setText("takePt1Body", h.takePt1Body);
+  setText("takePt2Title", h.takePt2Title);
+  setText("takePt3Title", h.takePt3Title);
+  setText("takePt3Body", h.takePt3Body);
+  renderTakeGrid();
+
+  setText("locLabel", h.locLabel);
+  setText("locTitle", h.locTitle);
+  setText("locAddr", h.locAddr);
+  setText("locHint", h.locHint);
+  setText("locPill", h.locPill);
+  setText("locFormLead", h.locFormLead);
+  setText("emailLabel", h.emailLabel);
+  setText("notifyBtn", h.notifyBtn);
+  setText("formNote", h.formNote);
+  setText("footerLine", h.footerLine);
+}
+
+document.getElementById("langs").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-lang]");
+  if (!b) return;
+  lang = b.dataset.lang;
+  localStorage.setItem("pingri_lang", lang);
+  syncUrl(false);
+  render();
+});
+
+window.addEventListener("popstate", () => {
+  lang = readLang();
+  render();
+});
+
+document.getElementById("notifyForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  document.getElementById("formNote").textContent = home().formDone;
+});
+
+const headerEl = document.getElementById("siteHeader");
+const onScroll = () => headerEl.classList.toggle("on", scrollY > 6);
+onScroll();
+addEventListener("scroll", onScroll, { passive: true });
+
+syncUrl(true);
+render();
   </script>
 </body>
 </html>
