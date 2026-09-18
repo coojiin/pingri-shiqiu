@@ -277,7 +277,7 @@ window.PINGRI_HOME = {
     takePt1Body: "結構清楚、出餐動線短，適合午休與下班一餐。",
     takePt2Title: "外帶／麵食重點",
     takePt3Title: "點餐方式",
-    takePt3Body: "官網先看菜單；線上點餐／外送上線後補上。",
+    takePt3Body: "外帶請至店內掃櫃檯 QR 點餐（需連店內 Wi‑Fi）。官網可先看菜單。",
     locLabel: "地點",
     locTitle: "來店與開幕通知",
     locAddr: "林口長庚／福樺水悅商圈",
