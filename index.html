@@ -648,6 +648,7 @@ function render() {
   setText("heroLead", h.heroLead);
   setText("ctaMenu", h.ctaMenu);
   setText("ctaTakeout", h.ctaTakeout);
+  document.getElementById("ctaTakeout").href = "order-system/";
   setText("ctaLoc", h.ctaLoc);
   setText("heroMeta", h.heroMeta);
   setText("heroCapL", h.heroCapL);
@@ -690,7 +691,9 @@ function render() {
   setText("takePt1Body", h.takePt1Body);
   setText("takePt2Title", h.takePt2Title);
   setText("takePt3Title", h.takePt3Title);
-  setText("takePt3Body", h.takePt3Body);
+  const takeBody = document.getElementById("takePt3Body");
+  takeBody.innerHTML = h.takePt3Body +
+    ` <a href="order-system/" style="color:var(--sage-deep);border-bottom:1px solid var(--sage)">點餐展示 →</a>`;
   renderTakeGrid();
 
   setText("locLabel", h.locLabel);

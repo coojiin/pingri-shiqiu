@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>桌號 QR｜平日食器（展示）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<style>
+  :root{--bg:#f4f0e8;--ink:#2a2622;--soft:#6e655c;--sage:#7a9084;--line:#cfc4b4;--white:#fbf8f2;--takeout:#c47a4e;--seal:#b86a5c}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink);padding:0 0 48px}
+  .banner{background:#5f7569;color:#fbf8f2;text-align:center;padding:8px 12px;font-size:12px;letter-spacing:.06em;font-weight:600}
+  .wrap{max-width:960px;margin:0 auto;padding:24px 16px}
+  .logo{height:42px;margin-bottom:16px}
+  h1{font-family:"Noto Serif TC",serif;font-size:24px;letter-spacing:.1em;margin-bottom:8px}
+  .sub{font-size:14px;color:var(--soft);margin-bottom:16px}
+  .tools{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin-bottom:20px}
+  label{font-size:12px;color:var(--soft);display:block;margin-bottom:4px}
+  input{padding:8px 10px;border:1px solid var(--line);background:var(--white);font:inherit;min-width:120px}
+  button{padding:10px 16px;border:none;background:var(--sage);color:#fff;cursor:pointer;font:inherit;letter-spacing:.08em}
+  button.dark{background:#2a2622}
+  button.sec{background:#ebe4d8;color:var(--ink)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+  .card{background:var(--white);border:1px solid var(--line);padding:14px;text-align:center;break-inside:avoid}
+  .card canvas{width:140px;height:140px;margin:8px auto;display:block}
+  .tn{font-family:"Noto Serif TC",serif;font-size:22px;letter-spacing:.12em}
+  .url{font-size:10px;color:var(--soft);word-break:break-all;margin-top:6px}
+  .note{background:var(--white);border:1px solid var(--line);padding:14px;margin-bottom:18px;font-size:13px;color:var(--soft)}
+  .note code{background:#ebe4d8;padding:1px 4px}
+  #loginGate{display:none;max-width:360px;margin:40px auto;padding:20px;background:var(--white);border:1px solid var(--line)}
+  #loginGate.show{display:block}
+  #loginGate input{width:100%;margin:8px 0}
+  #main{display:none}#main.show{display:block}
+  .warn{color:var(--seal);font-size:13px;margin-top:8px}
+  @media print{
+    .tools,.note,button,.no-print,#loginGate,.banner{display:none!important}
+    body{background:#fff;padding:0}
+    .card{break-inside:avoid;page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="banner" id="banner">展示原型｜訂單僅存在此瀏覽器｜正式版需店內主機</div>
+<div class="wrap">
+  <img class="logo" src="../brand/logo-heng-rice-noodle.png" alt="平日食器" />
+  <div id="loginGate">
+    <h1 style="font-size:20px">店員登入（展示）</h1>
+    <p class="sub">產生／重印桌碼 QR · <strong>非正式登入</strong></p>
+    <p class="warn">展示用非真實資安 · PIN 僅前端常數檢查</p>
+    <input type="password" id="pin" placeholder="PIN（預設 1234）" inputmode="numeric" />
+    <button type="button" id="loginBtn">登入</button>
+    <p class="warn" id="loginErr" style="display:none"></p>
+  </div>
+  <div id="main">
+    <h1>Token QR 產生</h1>
+    <p class="sub">5 桌＋外帶。QR 指向本站 Pages：<code>…/order.html?t=…</code></p>
+    <div class="note">
+      <strong>展示說明：</strong>Token 為自描述簽名碼（可在任何裝置驗證桌別），但<strong>訂單</strong>仍存在本機瀏覽器。<br/>
+      「產生／輪替」會作廢舊碼並發新碼——換碼後請重印。<br/>
+      基底：<code id="baseHint"></code>
+    </div>
+    <div class="tools no-print">
+      <div>
+        <label>桌數</label>
+        <input type="number" id="count" value="5" min="1" max="40" />
+      </div>
+      <button type="button" id="rotate">產生／輪替 Token</button>
+      <button type="button" id="reload" class="sec">載入現行碼</button>
+      <button type="button" id="print" class="dark">列印桌貼</button>
+      <button type="button" id="logoutBtn" class="sec">登出</button>
+      <a href="index.html" class="sec" style="padding:10px 16px;text-decoration:none;background:#ebe4d8;color:var(--ink);display:inline-block">展示中心</a>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="demo-crypto.js"></script>
+<script>
+(function () {
+  const cfg = window.PINGRI_ORDER || {};
+  if (cfg.banner) document.getElementById("banner").textContent = cfg.banner;
+  const DEMO_PIN = cfg.demoPin || PingriDemoCrypto.DEMO_PIN_FALLBACK || "1234";
+  const AUTH_KEY = "pingri_demo_staff_ok";
+
+  document.getElementById("baseHint").textContent = PingriDemoCrypto.orderOriginBase() + "/order.html?t=…";
+
+  function showLogin() {
+    document.getElementById("loginGate").classList.add("show");
+    document.getElementById("main").classList.remove("show");
+  }
+  function showMain() {
+    document.getElementById("loginGate").classList.remove("show");
+    document.getElementById("main").classList.add("show");
+  }
+
+  function ensureAuth() {
+    if (sessionStorage.getItem(AUTH_KEY) === "1") {
+      showMain();
+      loadTokens();
+    } else showLogin();
+  }
+
+  document.getElementById("loginBtn").onclick = () => {
+    const err = document.getElementById("loginErr");
+    err.style.display = "none";
+    if (document.getElementById("pin").value === DEMO_PIN) {
+      sessionStorage.setItem(AUTH_KEY, "1");
+      showMain();
+      loadTokens();
+    } else {
+      err.style.display = "block";
+      err.textContent = "PIN 錯誤（展示預設 1234）";
+    }
+  };
+  document.getElementById("pin").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") document.getElementById("loginBtn").click();
+  });
+  document.getElementById("logoutBtn").onclick = () => {
+    sessionStorage.removeItem(AUTH_KEY);
+    showLogin();
+  };
+
+  async function makeQR(text, el) {
+    const canvas = document.createElement("canvas");
+    await QRCode.toCanvas(canvas, text, { width: 140, margin: 1, color: { dark: "#2a2622", light: "#fbf8f2" } });
+    el.appendChild(canvas);
+  }
+
+  async function renderList(list) {
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+    for (const row of list) {
+      const card = document.createElement("div");
+      card.className = "card";
+      if (row.kind === "takeout") card.style.borderColor = "#c47a4e";
+      const title = row.label || (row.kind === "takeout" ? "外帶" : "桌 " + row.table);
+      const url = row.orderUrl || PingriDemoCrypto.orderUrlForToken(row.token);
+      card.innerHTML = `<div class="tn" ${row.kind === "takeout" ? 'style="color:#c47a4e"' : ""}>${title}</div>
+        <div class="qr"></div>
+        <div class="url">${url}</div>
+        ${row.kind === "takeout" ? '<div style="font-size:11px;margin-top:6px;color:#c47a4e">櫃檯／門口貼紙</div>' : ""}`;
+      grid.appendChild(card);
+      await makeQR(url, card.querySelector(".qr"));
+    }
+  }
+
+  async function loadTokens() {
+    const list = await PingriDemoCrypto.ensureTokens(parseInt(document.getElementById("count").value, 10) || 5);
+    await renderList(list);
+  }
+
+  document.getElementById("reload").onclick = () => loadTokens();
+  document.getElementById("rotate").onclick = async () => {
+    if (!confirm("輪替會作廢舊 QR（舊簽名碼仍可被驗證至過期策略前；展示上請當已換新貼）。確定？")) return;
+    const tables = parseInt(document.getElementById("count").value, 10) || 5;
+    const list = await PingriDemoCrypto.rotateTokens(tables);
+    await renderList(list);
+  };
+  document.getElementById("print").onclick = () => window.print();
+
+  ensureAuth();
+})();
+</script>
+</body>
+</html>

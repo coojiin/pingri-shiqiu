@@ -17,3 +17,143 @@ window.PINGRI_MENU = [
   { id: "bento-lurou", cat: "外帶便當", name: "巷口滷肉", sub: "便當", price: 160 },
   { id: "bento-shaorou", cat: "外帶便當", name: "炭火燒肉", sub: "便當（升級）", price: 165 }
 ];
+
+/**
+ * 展示用訂單庫：localStorage + BroadcastChannel（同瀏覽器多頁籤同步）
+ * 跨手機不同瀏覽器不會同步 —— 正式版需店內主機 API。
+ */
+(function (global) {
+  const ORDERS_KEY = "pingri_demo_orders_v1";
+  const CHANNEL = "pingri_demo_orders";
+  let seq = 0;
+  let pickupSeq = 100;
+
+  function readAll() {
+    try {
+      const raw = localStorage.getItem(ORDERS_KEY);
+      const data = raw ? JSON.parse(raw) : { orders: [], seq: 0, pickupSeq: 100 };
+      seq = data.seq || 0;
+      pickupSeq = data.pickupSeq || 100;
+      return data.orders || [];
+    } catch {
+      return [];
+    }
+  }
+
+  function writeAll(orders) {
+    localStorage.setItem(
+      ORDERS_KEY,
+      JSON.stringify({ orders, seq, pickupSeq, updatedAt: Date.now() })
+    );
+    try {
+      if (global.__pingriOrdersBc) {
+        global.__pingriOrdersBc.postMessage({ type: "orders", at: Date.now() });
+      }
+    } catch {}
+  }
+
+  try {
+    global.__pingriOrdersBc = new BroadcastChannel(CHANNEL);
+  } catch {
+    global.__pingriOrdersBc = null;
+  }
+
+  function nextId() {
+    seq += 1;
+    const t = new Date();
+    const hh = String(t.getHours()).padStart(2, "0");
+    const mm = String(t.getMinutes()).padStart(2, "0");
+    return "D" + hh + mm + "-" + String(seq).padStart(3, "0");
+  }
+
+  function nextPickup() {
+    pickupSeq = (pickupSeq % 999) + 1;
+    return "T-" + String(pickupSeq).padStart(3, "0");
+  }
+
+  const listeners = new Set();
+
+  function notify() {
+    const orders = readAll();
+    listeners.forEach((fn) => {
+      try { fn(orders); } catch {}
+    });
+  }
+
+  if (global.__pingriOrdersBc) {
+    global.__pingriOrdersBc.onmessage = () => notify();
+  }
+  global.addEventListener("storage", (e) => {
+    if (e.key === ORDERS_KEY) notify();
+  });
+
+  global.PingriOrders = {
+    list() {
+      return readAll().slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    },
+    get(id) {
+      return readAll().find((o) => o.id === id) || null;
+    },
+    add({ kind, table, label, items, note, token }) {
+      const orders = readAll();
+      const total = (items || []).reduce((s, i) => s + (i.price || 0) * (i.qty || 0), 0);
+      const order = {
+        id: nextId(),
+        kind: kind === "takeout" ? "takeout" : "table",
+        mode: kind === "takeout" ? "takeout" : "dinein",
+        table: kind === "takeout" ? 0 : Number(table) || 0,
+        label: label || (kind === "takeout" ? "外帶" : "桌 " + table),
+        items: items || [],
+        note: note || "",
+        total,
+        status: "pending",
+        pickupCode: kind === "takeout" ? nextPickup() : null,
+        token: token || "",
+        createdAt: Date.now()
+      };
+      orders.unshift(order);
+      writeAll(orders);
+      notify();
+      return order;
+    },
+    update(id, patch) {
+      const orders = readAll();
+      const i = orders.findIndex((o) => o.id === id);
+      if (i < 0) return null;
+      if (patch.status === "remove") {
+        orders.splice(i, 1);
+        writeAll(orders);
+        notify();
+        return null;
+      }
+      orders[i] = { ...orders[i], ...patch, updatedAt: Date.now() };
+      writeAll(orders);
+      notify();
+      return orders[i];
+    },
+    callStaff({ orderId, kind, table, label, token }) {
+      if (orderId) {
+        const o = this.update(orderId, { status: "call" });
+        if (o) return o;
+      }
+      return this.add({
+        kind: kind || "table",
+        table,
+        label: (label || "桌 " + table) + " · 叫店員",
+        items: [{ id: "call", name: "叫店員", sub: "服務鈴", price: 0, qty: 1 }],
+        note: "客人呼叫",
+        token
+      });
+    },
+    clearAll() {
+      seq = 0;
+      pickupSeq = 100;
+      writeAll([]);
+      notify();
+    },
+    subscribe(fn) {
+      listeners.add(fn);
+      return () => listeners.delete(fn);
+    }
+  };
+})(window);

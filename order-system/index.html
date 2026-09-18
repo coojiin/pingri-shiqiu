@@ -4,16 +4,88 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="noindex" />
-<title>平日食器點餐</title>
+<title>點餐展示原型｜平日食器</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet" />
 <style>
-  body{font-family:system-ui,"Noto Sans TC",sans-serif;background:#f4f0e8;color:#2a2622;line-height:1.6;margin:0;padding:48px 20px;text-align:center}
-  h1{font-size:1.35rem;letter-spacing:.12em;font-weight:600;margin:0 0 16px}
-  p{max-width:28em;margin:0 auto 12px;color:#6e655c;font-size:.95rem}
+  :root{--bg:#f4f0e8;--ink:#2a2622;--soft:#6e655c;--sage:#7a9084;--sage-d:#5f7569;--line:#cfc4b4;--white:#fbf8f2;--seal:#b86a5c;--takeout:#c47a4e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;padding:0 0 64px}
+  .banner{background:#5f7569;color:#fbf8f2;text-align:center;padding:10px 16px;font-size:13px;letter-spacing:.08em;font-weight:600}
+  .wrap{max-width:720px;margin:0 auto;padding:28px 20px}
+  .logo{height:44px;margin-bottom:16px}
+  h1{font-family:"Noto Serif TC",serif;font-size:26px;letter-spacing:.12em;margin-bottom:8px}
+  .sub{color:var(--soft);font-size:14px;margin-bottom:22px}
+  .card{background:var(--white);border:1px solid var(--line);padding:18px 20px;margin-bottom:14px}
+  .card h2{font-family:"Noto Serif TC",serif;font-size:17px;letter-spacing:.1em;margin-bottom:10px;color:var(--sage-d)}
+  .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  a.btn{display:inline-block;padding:12px 16px;background:var(--sage);color:#fff;text-decoration:none;font-size:14px;letter-spacing:.08em}
+  a.btn.dark{background:var(--ink)}
+  a.btn.sec{background:#ebe4d8;color:var(--ink)}
+  a.btn.to{background:var(--takeout)}
+  ol{padding-left:1.3em;font-size:14px;color:var(--soft)}
+  ol li{margin:8px 0}
+  .warn{color:var(--seal);font-size:13px;margin-top:10px}
+  code{background:#ebe4d8;padding:1px 6px;font-size:12px;word-break:break-all}
+  .demo-urls{font-size:13px;color:var(--soft);margin-top:10px}
+  .demo-urls div{margin:6px 0}
 </style>
 </head>
 <body>
-  <h1>平日食器點餐</h1>
-  <p>請連上店內 Wi‑Fi，掃描桌上或櫃檯 QR 進入點餐。</p>
-  <p>外帶請至店內掃櫃檯 QR（不提供公開外帶連結）。</p>
+<div class="banner" id="banner">展示原型｜訂單僅存在此瀏覽器｜正式版需店內主機</div>
+<div class="wrap">
+  <img class="logo" src="../brand/logo-heng-rice-noodle.png" alt="平日食器" />
+  <h1>點餐系統 · 展示用原型</h1>
+  <p class="sub">給店長驗收：全部在 GitHub Pages，無需另開 API。訂單存在<strong>同一台電腦的瀏覽器</strong>；跨手機即時同步需之後店內主機。</p>
+
+  <div class="card">
+    <h2>一鍵示範（請用同一台筆電）</h2>
+    <p style="font-size:14px;color:var(--soft)">建議開三個分頁：桌碼 → 廚房 → 客人點餐。下方連結會自動準備示範 Token。</p>
+    <div class="links">
+      <a class="btn" id="btnTables" href="tables.html">① 桌碼 QR</a>
+      <a class="btn dark" id="btnKitchen" href="kitchen.html">② 廚房出單</a>
+      <a class="btn" id="btnOrder1" href="order.html">③ 桌 1 點餐</a>
+      <a class="btn to" id="btnTakeout" href="order.html">外帶點餐</a>
+    </div>
+    <div class="demo-urls" id="demoUrls">準備中…</div>
+    <p class="warn">PIN 預設 <strong>1234</strong>（非正式登入／展示用非真實資安）</p>
+  </div>
+
+  <div class="card">
+    <h2>給店長的 3 步驟驗收</h2>
+    <ol>
+      <li>開 <strong>桌碼 QR</strong> → 輸入 PIN 1234 → 若尚無碼按「產生／輪替」→ 可列印桌貼。</li>
+      <li>再開一個分頁進 <strong>廚房出單</strong>（同一 PIN）→ 保持此分頁開著。</li>
+      <li>第三個分頁用「桌 1 點餐」或掃 QR → 選餐送出 → 廚房分頁應立刻出現訂單（同瀏覽器）。改狀態、列印小票、外帶會有取餐號。</li>
+    </ol>
+    <p class="warn">※ 兩支手機各開一個頁面時，訂單<strong>不會</strong>互相同步（無後端）。驗收請用一台筆電多視窗。</p>
+  </div>
+
+  <div class="card">
+    <h2>所有頁面</h2>
+    <div class="links">
+      <a class="btn sec" href="flow.html">流程說明</a>
+      <a class="btn sec" href="tables.html">tables.html</a>
+      <a class="btn sec" href="kitchen.html">kitchen.html</a>
+      <a class="btn sec" href="order.html">order.html</a>
+      <a class="btn sec" href="../">回官網</a>
+    </div>
+  </div>
+</div>
+<script src="config.js"></script>
+<script src="demo-crypto.js"></script>
+<script>
+(async function () {
+  const cfg = window.PINGRI_ORDER || {};
+  if (cfg.banner) document.getElementById("banner").textContent = cfg.banner;
+  const list = await PingriDemoCrypto.ensureTokens(5);
+  const t1 = list.find(x => x.kind === "table" && x.table === 1) || list[0];
+  const to = list.find(x => x.kind === "takeout");
+  if (t1) document.getElementById("btnOrder1").href = t1.orderUrl;
+  if (to) document.getElementById("btnTakeout").href = to.orderUrl;
+  document.getElementById("demoUrls").innerHTML =
+    (t1 ? `<div>桌 1：<code>${t1.orderUrl}</code></div>` : "") +
+    (to ? `<div>外帶：<code>${to.orderUrl}</code></div>` : "");
+})();
+</script>
 </body>
 </html>

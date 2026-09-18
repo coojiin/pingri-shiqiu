@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>廚房出單｜平日食器（展示）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#1f1c19;--card:#2a2622;--ink:#f4f0e8;--soft:#b5aa9c;--sage:#8fad9f;--warn:#d4a574;--call:#c47a7a;--line:#3d3731;--takeout:#c47a4e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  .banner{background:#5f7569;color:#fbf8f2;text-align:center;padding:8px 12px;font-size:12px;letter-spacing:.06em;font-weight:600}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .logo{height:40px;filter:brightness(1.15)}
+  .meta{font-size:13px;color:var(--soft)}
+  .tabs{display:flex;gap:8px;padding:12px 18px;flex-wrap:wrap}
+  .tabs button{background:transparent;border:1px solid var(--line);color:var(--soft);padding:8px 12px;cursor:pointer;font:inherit}
+  .tabs button.on{border-color:var(--sage);color:var(--ink);background:#334039}
+  .board{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;padding:0 18px 32px}
+  .ticket{background:var(--card);border:1px solid var(--line);padding:14px}
+  .ticket.call{border-color:var(--call)}
+  .ticket.takeout{border-color:var(--takeout);box-shadow:inset 4px 0 0 var(--takeout)}
+  .badge-to{display:inline-block;background:var(--takeout);color:#1f1c19;font-size:11px;letter-spacing:.1em;padding:2px 8px;margin-left:8px;font-weight:700}
+  .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .tbl{font-family:"Noto Serif TC",serif;font-size:28px;letter-spacing:.08em}
+  .st{font-size:12px;letter-spacing:.12em;color:var(--warn)}
+  .st.cooking{color:var(--sage)} .st.done{color:var(--soft)} .st.call{color:var(--call)}
+  .id{font-size:11px;color:var(--soft)}
+  ul{list-style:none;margin:10px 0;font-size:15px}
+  li{padding:4px 0;border-bottom:1px dotted var(--line)}
+  .note{font-size:13px;color:var(--warn);margin:8px 0}
+  .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .acts button{flex:1;min-width:70px;padding:10px;border:none;cursor:pointer;font:inherit;background:var(--sage);color:#1f1c19;font-weight:600}
+  .acts button.sec{background:#3d3731;color:var(--ink)}
+  .empty{padding:48px 18px;text-align:center;color:var(--soft)}
+  #loginGate{display:none;max-width:360px;margin:40px auto;padding:24px;background:var(--card);border:1px solid var(--line)}
+  #loginGate.show{display:block}
+  #loginGate h1{font-family:"Noto Serif TC",serif;font-size:22px;margin-bottom:8px}
+  #loginGate p{font-size:13px;color:var(--soft);margin-bottom:14px}
+  #loginGate input{width:100%;padding:12px;font:inherit;border:1px solid var(--line);background:#1f1c19;color:var(--ink);margin-bottom:10px}
+  #loginGate button{width:100%;padding:12px;border:none;background:var(--sage);color:#1f1c19;font:inherit;font-weight:600;cursor:pointer}
+  #main{display:none} #main.show{display:block}
+  .hdr-acts{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .hdr-acts button,.hdr-acts a{padding:8px 12px;border:1px solid var(--line);background:transparent;color:var(--soft);cursor:pointer;font:inherit;font-size:12px;text-decoration:none}
+  .warn{color:var(--call);font-size:13px;margin-top:8px}
+  @media print{
+    body *{visibility:hidden}
+    #printArea,#printArea *{visibility:visible}
+    #printArea{position:absolute;left:0;top:0;width:100%;background:#fff;color:#000;padding:16px}
+  }
+  #printArea{display:none}
+</style>
+</head>
+<body>
+<div class="banner" id="banner">展示原型｜訂單僅存在此瀏覽器｜正式版需店內主機</div>
+<div id="loginGate">
+  <h1>廚房登入（展示）</h1>
+  <p>非正式登入 · 展示用非真實資安 · 預設 PIN 1234</p>
+  <input type="password" id="pin" inputmode="numeric" placeholder="PIN" autocomplete="current-password" />
+  <button type="button" id="loginBtn">進入</button>
+  <p class="warn" id="loginErr" style="display:none"></p>
+</div>
+<div id="main">
+<header>
+  <img class="logo" src="../brand/logo-heng-rice-noodle.png" alt="平日食器" />
+  <div class="hdr-acts">
+    <div class="meta" id="meta">廚房 · Pages 展示</div>
+    <a href="index.html">展示中心</a>
+    <button type="button" id="clearBtn">清空訂單</button>
+    <button type="button" id="logoutBtn">登出</button>
+  </div>
+</header>
+<div class="tabs">
+  <button type="button" class="on" data-f="active">進行中</button>
+  <button type="button" data-f="takeout">外帶</button>
+  <button type="button" data-f="call">叫店員</button>
+  <button type="button" data-f="done">已完成</button>
+  <button type="button" data-f="all">全部</button>
+</div>
+<div class="board" id="board"></div>
+</div>
+<div id="printArea"></div>
+
+<script src="config.js"></script>
+<script src="menu-data.js"></script>
+<script>
+(function () {
+  const cfg = window.PINGRI_ORDER || {};
+  if (cfg.banner) document.getElementById("banner").textContent = cfg.banner;
+  const DEMO_PIN = cfg.demoPin || "1234";
+  const AUTH_KEY = "pingri_demo_staff_ok";
+  let filter = "active";
+  const labels = { pending: "待做", cooking: "製作中", done: "完成", call: "叫店員" };
+
+  function showLogin() {
+    document.getElementById("loginGate").classList.add("show");
+    document.getElementById("main").classList.remove("show");
+  }
+  function showMain() {
+    document.getElementById("loginGate").classList.remove("show");
+    document.getElementById("main").classList.add("show");
+  }
+
+  function ensureAuth() {
+    if (sessionStorage.getItem(AUTH_KEY) === "1") {
+      showMain();
+      startLive();
+    } else showLogin();
+  }
+
+  document.getElementById("loginBtn").onclick = () => {
+    const err = document.getElementById("loginErr");
+    err.style.display = "none";
+    if (document.getElementById("pin").value === DEMO_PIN) {
+      sessionStorage.setItem(AUTH_KEY, "1");
+      showMain();
+      startLive();
+    } else {
+      err.style.display = "block";
+      err.textContent = "PIN 錯誤（展示預設 1234）";
+    }
+  };
+  document.getElementById("pin").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") document.getElementById("loginBtn").click();
+  });
+  document.getElementById("logoutBtn").onclick = () => {
+    sessionStorage.removeItem(AUTH_KEY);
+    showLogin();
+  };
+  document.getElementById("clearBtn").onclick = () => {
+    if (confirm("清空本瀏覽器內所有展示訂單？")) {
+      PingriOrders.clearAll();
+      render();
+    }
+  };
+
+  function printTicket(o) {
+    const items = (o.items || []).map(i => `<div>${i.name}（${i.sub}）× ${i.qty}</div>`).join("") || "—";
+    const title = o.mode === "takeout" || o.kind === "takeout" ? (o.pickupCode || "外帶") : ("桌 " + o.table);
+    const el = document.getElementById("printArea");
+    el.style.display = "block";
+    el.innerHTML = `<h1 style="font-size:28px;margin:0 0 8px">平日食器（展示）</h1>
+      <div style="font-size:36px;font-weight:700">${title}</div>
+      <div style="margin:8px 0;font-size:12px">${o.id} · ${new Date(o.createdAt).toLocaleString("zh-TW")}</div>
+      <hr/>${items}
+      ${o.note ? `<p>備註：${o.note}</p>` : ""}
+      <p style="margin-top:12px;font-size:18px">$${o.total || 0}</p>`;
+    window.print();
+    el.style.display = "none";
+  }
+
+  function filtered(list) {
+    if (filter === "active") return list.filter(o => o.status === "pending" || o.status === "cooking");
+    if (filter === "takeout") return list.filter(o => o.kind === "takeout" || o.mode === "takeout");
+    if (filter === "call") return list.filter(o => o.status === "call");
+    if (filter === "done") return list.filter(o => o.status === "done");
+    return list;
+  }
+
+  function render() {
+    const list = filtered(PingriOrders.list());
+    const board = document.getElementById("board");
+    if (!list.length) { board.innerHTML = `<div class="empty">目前沒有單<br/><span style="font-size:12px">請在同一瀏覽器另一分頁用 order 送單</span></div>`; board._orders = []; return; }
+    board.innerHTML = list.map(o => {
+      const items = (o.items || []).map(i => `<li>${i.name}（${i.sub}）× ${i.qty}</li>`).join("") || "<li>—</li>";
+      const next = o.status === "pending"
+        ? `<button type="button" data-id="${o.id}" data-s="cooking">製作中</button>`
+        : o.status === "cooking"
+        ? `<button type="button" data-id="${o.id}" data-s="done">完成</button>` : "";
+      const clear = (o.status === "done" || o.status === "call")
+        ? `<button type="button" class="sec" data-id="${o.id}" data-s="remove">清除</button>` : "";
+      const time = new Date(o.createdAt).toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit" });
+      const isTO = o.mode === "takeout" || o.kind === "takeout";
+      const title = isTO ? (o.pickupCode || "外帶") : ("桌 " + o.table);
+      const badge = isTO ? `<span class="badge-to">外帶</span>` : "";
+      return `<article class="ticket ${o.status === "call" ? "call" : ""} ${isTO ? "takeout" : ""}">
+        <div class="top"><div class="tbl">${title}${badge}</div><div class="st ${o.status}">${labels[o.status] || o.status}</div></div>
+        <div class="id">${o.id} · ${time}${o.total ? " · $" + o.total : ""}</div>
+        <ul>${items}</ul>
+        ${o.note ? `<div class="note">備註：${o.note}</div>` : ""}
+        <div class="acts">${next}${o.status === "pending" ? `<button type="button" class="sec" data-id="${o.id}" data-s="done">直接完成</button>` : ""}
+        <button type="button" class="sec" data-print="${o.id}">列印</button>${clear}</div>
+      </article>`;
+    }).join("");
+    board._orders = list;
+  }
+
+  document.querySelector(".tabs").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-f]");
+    if (!b) return;
+    filter = b.dataset.f;
+    document.querySelectorAll(".tabs button").forEach(x => x.classList.toggle("on", x === b));
+    render();
+  });
+
+  document.getElementById("board").addEventListener("click", (e) => {
+    const pb = e.target.closest("button[data-print]");
+    if (pb) {
+      const list = document.getElementById("board")._orders || [];
+      const o = list.find(x => x.id === pb.dataset.print) || PingriOrders.get(pb.dataset.print);
+      if (o) printTicket(o);
+      return;
+    }
+    const b = e.target.closest("button[data-id]");
+    if (!b) return;
+    PingriOrders.update(b.dataset.id, { status: b.dataset.s });
+    render();
+  });
+
+  function startLive() {
+    render();
+    PingriOrders.subscribe(() => render());
+    setInterval(render, 2000);
+  }
+
+  ensureAuth();
+})();
+</script>
+</body>
+</html>

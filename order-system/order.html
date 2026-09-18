@@ -2,70 +2,312 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="robots" content="noindex" />
-<title>點餐｜平日食器</title>
+<title>點餐｜平日食器（展示）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet" />
 <style>
-  body{font-family:system-ui,"Noto Sans TC",sans-serif;background:#f4f0e8;color:#2a2622;line-height:1.65;margin:0;padding:48px 20px;text-align:center}
-  h1{font-size:1.4rem;letter-spacing:.12em;font-weight:600;margin:0 0 16px}
-  p{max-width:28em;margin:0 auto 12px;color:#6e655c;font-size:.95rem}
-  .box{max-width:420px;margin:24px auto;padding:20px;background:#fbf8f2;border:1px solid #cfc4b4;text-align:left}
-  code{background:#ebe4d8;padding:1px 6px;font-size:.85rem}
+  :root {
+    --bg:#f4f0e8; --ink:#2a2622; --soft:#6e655c; --sage:#7a9084; --sage-d:#5f7569;
+    --line:#cfc4b4; --white:#fbf8f2; --seal:#b86a5c; --takeout:#c47a4e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;padding-bottom:88px}
+  .banner{background:#5f7569;color:#fbf8f2;text-align:center;padding:8px 12px;font-size:12px;letter-spacing:.06em;font-weight:600;position:sticky;top:0;z-index:25}
+  header{
+    position:sticky;top:32px;z-index:20;background:rgba(244,240,232,.95);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  }
+  .logo{height:36px;width:auto;max-width:55vw;object-fit:contain}
+  .table-pill{font-size:13px;letter-spacing:.08em;background:var(--sage);color:#fff;padding:6px 12px;white-space:nowrap}
+  .table-pill.takeout{background:var(--takeout)}
+  .wrap{padding:16px;max-width:560px;margin:0 auto}
+  .hint{font-size:13px;color:var(--soft);margin-bottom:14px}
+  .cat{font-family:"Noto Serif TC",serif;font-size:14px;letter-spacing:.18em;color:var(--sage-d);margin:18px 0 8px}
+  .item{
+    display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;
+    background:var(--white);border:1px solid var(--line);padding:12px 14px;margin-bottom:8px;
+  }
+  .name{font-family:"Noto Serif TC",serif;font-size:16px;letter-spacing:.06em}
+  .sub{font-size:12px;color:var(--soft);margin-top:2px}
+  .price{font-size:14px;color:var(--seal);margin-top:4px}
+  .qty{display:flex;align-items:center;gap:8px}
+  .qty button{width:32px;height:32px;border:1px solid var(--sage);background:#fff;color:var(--sage-d);font-size:18px;line-height:1;cursor:pointer}
+  .qty span{min-width:1.2em;text-align:center;font-weight:600}
+  .cart-bar{
+    position:fixed;left:0;right:0;bottom:0;z-index:30;
+    background:var(--ink);color:#fbf8f2;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  }
+  .cart-bar button,.panel button.primary{background:var(--sage);color:#fff;border:none;padding:12px 18px;font-size:14px;letter-spacing:.1em;cursor:pointer}
+  body.takeout .cart-bar button,.panel button.primary.takeout-btn{background:var(--takeout)}
+  .panel{display:none;position:fixed;inset:0;z-index:40;background:rgba(42,38,34,.45);padding:24px 16px 16px}
+  .panel.open{display:flex;align-items:flex-end;justify-content:center}
+  .sheet{background:var(--bg);width:min(560px,100%);max-height:85vh;overflow:auto;padding:20px 16px 24px;border:1px solid var(--line)}
+  .sheet h2{font-family:"Noto Serif TC",serif;font-size:18px;letter-spacing:.1em;margin-bottom:12px}
+  .row{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px dotted var(--line);font-size:14px}
+  textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);background:var(--white);font:inherit;resize:vertical}
+  .actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .actions button{flex:1;min-width:120px;padding:12px;border:1px solid var(--line);background:var(--white);cursor:pointer}
+  .actions .primary{background:var(--sage);color:#fff;border-color:var(--sage)}
+  .ok{padding:20px;text-align:center}
+  .ok h2{margin-bottom:8px}
+  .pickup{font-family:"Noto Serif TC",serif;font-size:42px;letter-spacing:.12em;color:var(--takeout);margin:12px 0;padding:12px;border:2px dashed var(--takeout)}
+  .ghost{font-size:13px;color:var(--sage-d);margin-top:16px;text-align:center}
+  .block{display:none;padding:48px 20px;text-align:center;max-width:480px;margin:40px auto}
+  .block.show{display:block}
+  .block h2{font-family:"Noto Serif TC",serif;font-size:22px;margin-bottom:12px;letter-spacing:.08em}
+  .block a{color:var(--sage-d)}
+  #app{display:none}
+  #app.ready{display:block}
 </style>
 </head>
 <body>
-  <h1>平日食器點餐</h1>
-  <div class="box" id="msg">
-    <p><strong>請連上店內 Wi‑Fi 後，掃描桌上或櫃檯 QR。</strong></p>
-    <p>點餐服務在店內區網運作；此公開頁僅為備援說明，無法直接點餐。</p>
-    <p style="margin-top:16px;font-size:.85rem">外帶請至店內掃櫃檯 QR，勿使用舊版桌號／外帶連結。</p>
-  </div>
-  <script src="config.js"></script>
-  <script>
-  (function () {
-    const params = new URLSearchParams(location.search);
-    const cfg = window.PINGRI_ORDER || {};
-    const apiBase = (cfg.apiBase || "").replace(/\/$/, "");
-    const msg = document.getElementById("msg");
+<div class="banner" id="banner">展示原型｜訂單僅存在此瀏覽器｜正式版需店內主機</div>
+<div class="block" id="blockMsg"></div>
+<div id="app">
+<header>
+  <img class="logo" src="../brand/logo-heng-rice-noodle.png" alt="平日食器" />
+  <div class="table-pill" id="tablePill">—</div>
+</header>
+<div class="wrap">
+  <p class="hint" id="hint">選好餐點後送出；廚房分頁需在<strong>同一瀏覽器</strong>才看得到。結帳請到櫃檯（展示）。</p>
+  <div id="menu"></div>
+  <p class="ghost" id="callWrap"><button id="callBtn" type="button" style="all:unset;cursor:pointer;color:var(--sage-d);border-bottom:1px solid var(--sage)">餐畢叫店員</button></p>
+</div>
+<div class="cart-bar" id="cartBar">
+  <div><span id="cartCount">0</span> 項 · $<span id="cartTotal">0</span></div>
+  <button type="button" id="openCart">看購物車</button>
+</div>
+</div>
+<div class="panel" id="panel"><div class="sheet" id="sheet"></div></div>
 
-    if (params.has("table") && !params.get("t")) {
-      msg.innerHTML = "<p><strong>請掃描桌上 QR（勿使用舊桌號連結）。</strong></p><p>舊的 <code>?table=</code> 連結已停用。</p>";
-      return;
-    }
-    if ((params.get("mode") || "").toLowerCase() === "takeout" && !params.get("t")) {
-      msg.innerHTML = "<p><strong>外帶請至店內掃櫃檯 QR。</strong></p><p>公開站不再提供無代碼的外帶入口。</p>";
-      return;
-    }
+<script src="config.js"></script>
+<script src="demo-crypto.js"></script>
+<script src="menu-data.js"></script>
+<script>
+(async function () {
+  const params = new URLSearchParams(location.search);
+  const t = (params.get("t") || "").trim();
+  const cfg = window.PINGRI_ORDER || {};
+  if (cfg.banner) document.getElementById("banner").textContent = cfg.banner;
 
-    // If apiBase configured (future cloud), redirect/load full client — for now stub only
-    if (apiBase) {
-      const t = (params.get("t") || "").trim();
-      if (!t) {
-        msg.innerHTML = "<p><strong>請掃描桌上或櫃檯 QR 進入點餐。</strong></p>";
-        return;
+  const block = document.getElementById("blockMsg");
+  const app = document.getElementById("app");
+
+  function showBlock(title, html) {
+    block.classList.add("show");
+    app.classList.remove("ready");
+    document.getElementById("cartBar").style.display = "none";
+    block.innerHTML = `<h2>${title}</h2><div class="hint">${html}</div>`;
+  }
+
+  if (params.has("table") && !t) {
+    showBlock("請掃描桌上 QR", "勿使用舊桌號連結（?table=）。請掃描桌上或櫃檯的最新 QR，或回<a href=\"index.html\">展示說明</a>用示範連結。");
+    return;
+  }
+  if ((params.get("mode") || "").toLowerCase() === "takeout" && !t) {
+    showBlock("請掃描櫃檯 QR", "外帶請用 Token QR，或回<a href=\"index.html\">展示中心</a>點「外帶點餐」。");
+    return;
+  }
+  if (!t) {
+    showBlock("請掃描 QR 點餐",
+      "此頁需透過桌上／櫃檯 QR 進入（網址含安全代碼 <code>?t=…</code>）。<br/><br/>" +
+      "<strong>展示說明：</strong>請用同一瀏覽器先開 <a href=\"tables.html\">tables</a> 產生 QR，或回<a href=\"index.html\">展示中心</a>用下方示範連結。");
+    return;
+  }
+
+  const session = await PingriDemoCrypto.verifyToken(t);
+  if (!session) {
+    showBlock("QR 無效",
+      "Token 簽名不符或格式錯誤。請回 <a href=\"tables.html\">tables</a> 重新產生，或用<a href=\"index.html\">展示中心</a>一鍵示範。<br/><br/>" +
+      "（若您從舊連結進來，舊碼可能已輪替。）");
+    return;
+  }
+
+  // 本機若已有現行碼清單，且此 token 不在內 → 視為已輪替（僅同瀏覽器）
+  const activeList = PingriDemoCrypto.loadTokenList();
+  if (activeList.length && !activeList.some(x => x.token === t)) {
+    showBlock("此碼已輪替",
+      "本機桌碼已換新。請掃最新 QR，或回<a href=\"index.html\">展示中心</a>／<a href=\"tables.html\">tables</a>。");
+    return;
+  }
+
+  let lastOrderId = null;
+  const cart = new Map();
+
+  function startUI() {
+    block.classList.remove("show");
+    app.classList.add("ready");
+    document.getElementById("cartBar").style.display = "flex";
+    const pill = document.getElementById("tablePill");
+    const isTakeout = session.kind === "takeout";
+    if (isTakeout) {
+      document.body.classList.add("takeout");
+      document.title = "外帶點餐｜平日食器（展示）";
+      pill.textContent = "外帶";
+      pill.classList.add("takeout");
+      document.getElementById("hint").textContent = "外帶展示：送出後會得到取餐代號。廚房需同一瀏覽器才看得到。";
+      document.getElementById("callWrap").style.display = "none";
+    } else {
+      pill.textContent = session.label || ("桌 " + session.table);
+    }
+    renderMenu();
+    refreshBar();
+  }
+
+  function renderMenu() {
+    const root = document.getElementById("menu");
+    const cats = [...new Set(PINGRI_MENU.map(i => i.cat))];
+    root.innerHTML = cats.map(cat => {
+      const items = PINGRI_MENU.filter(i => i.cat === cat).map(i => {
+        const q = cart.get(i.id) || 0;
+        return `<div class="item" data-id="${i.id}">
+          <div><div class="name">${i.name}</div><div class="sub">${i.sub}</div><div class="price">$${i.price}</div></div>
+          <div class="qty">
+            <button type="button" data-act="-" aria-label="減少">−</button>
+            <span>${q}</span>
+            <button type="button" data-act="+" aria-label="增加">＋</button>
+          </div>
+        </div>`;
+      }).join("");
+      return `<div class="cat">${cat}</div>${items}`;
+    }).join("");
+  }
+
+  function totals() {
+    let count = 0, total = 0;
+    for (const [id, qty] of cart) {
+      const item = PINGRI_MENU.find(i => i.id === id);
+      if (!item || !qty) continue;
+      count += qty; total += item.price * qty;
+    }
+    return { count, total };
+  }
+
+  function refreshBar() {
+    const { count, total } = totals();
+    document.getElementById("cartCount").textContent = count;
+    document.getElementById("cartTotal").textContent = total;
+  }
+
+  document.getElementById("menu").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-act]");
+    if (!btn) return;
+    const id = btn.closest(".item").dataset.id;
+    let q = cart.get(id) || 0;
+    q = btn.dataset.act === "+" ? q + 1 : Math.max(0, q - 1);
+    if (q === 0) cart.delete(id); else cart.set(id, q);
+    renderMenu();
+    refreshBar();
+  });
+
+  function openPanel(html) {
+    document.getElementById("sheet").innerHTML = html;
+    document.getElementById("panel").classList.add("open");
+  }
+  function closePanel() { document.getElementById("panel").classList.remove("open"); }
+  document.getElementById("panel").addEventListener("click", (e) => { if (e.target.id === "panel") closePanel(); });
+  function bindClose() {
+    const b = document.getElementById("closeP");
+    if (b) b.onclick = closePanel;
+  }
+
+  const isTakeout = () => session.kind === "takeout";
+
+  document.getElementById("openCart").onclick = () => {
+    const { count, total } = totals();
+    if (!count) {
+      openPanel(`<h2>購物車是空的</h2><p class="hint">先選幾樣再送出。</p><div class="actions"><button type="button" id="closeP">關閉</button></div>`);
+      bindClose(); return;
+    }
+    const rows = [...cart.entries()].map(([id, qty]) => {
+      const i = PINGRI_MENU.find(x => x.id === id);
+      return `<div class="row"><span>${i.name} × ${qty}</span><span>$${i.price * qty}</span></div>`;
+    }).join("");
+    const title = isTakeout() ? "外帶 · 購物車" : `${session.label} · 購物車`;
+    openPanel(`
+      <h2>${title}</h2>
+      ${rows}
+      <div class="row" style="font-weight:600;border:none;margin-top:8px"><span>合計</span><span>$${total}</span></div>
+      <label class="hint" style="display:block;margin-top:12px">${isTakeout() ? "取餐備註" : "整單備註"}</label>
+      <textarea id="note" rows="2" placeholder="${isTakeout() ? "例：約 12:20 取餐" : "選填"}"></textarea>
+      <div class="actions">
+        <button type="button" id="closeP">繼續選</button>
+        <button type="button" class="primary${isTakeout() ? " takeout-btn" : ""}" id="submitOrder">送出訂單</button>
+      </div>
+    `);
+    bindClose();
+    document.getElementById("submitOrder").onclick = submitOrder;
+  };
+
+  function submitOrder() {
+    const { count } = totals();
+    if (!count) return;
+    const note = (document.getElementById("note")?.value || "").trim();
+    const items = [...cart.entries()].map(([id, qty]) => {
+      const i = PINGRI_MENU.find(x => x.id === id);
+      return { id, name: i.name, sub: i.sub, price: i.price, qty };
+    });
+    const btn = document.getElementById("submitOrder");
+    if (btn) { btn.disabled = true; btn.textContent = "送出中…"; }
+    try {
+      const order = PingriOrders.add({
+        kind: session.kind,
+        table: session.table,
+        label: session.label,
+        items,
+        note,
+        token: session.token
+      });
+      lastOrderId = order.id;
+      cart.clear();
+      renderMenu();
+      refreshBar();
+      if (isTakeout()) {
+        openPanel(`
+          <div class="ok">
+            <h2>外帶已送出</h2>
+            <p>請記住取餐代號</p>
+            <div class="pickup">${order.pickupCode || "—"}</div>
+            <p class="hint">合計 $${order.total}<br/>展示：廚房分頁需同一瀏覽器才看得到。</p>
+            <div class="actions"><button type="button" class="primary takeout-btn" id="closeP">好</button></div>
+          </div>`);
+      } else {
+        openPanel(`
+          <div class="ok">
+            <h2>已送出</h2>
+            <p>單號 ${order.id}<br/>${session.label} · $${order.total}</p>
+            <p class="hint" style="margin-top:10px">展示：請確認廚房分頁已在同一瀏覽器開啟。</p>
+            <div class="actions"><button type="button" class="primary" id="closeP">好</button></div>
+          </div>`);
       }
-      msg.innerHTML = "<p>正在連線點餐服務…</p>";
-      // Lightweight: send user to message that full menu needs LAN build;
-      // When cloud ready, replace this file with full order client from API public/order.html
-      fetch(apiBase + "/v1/resolve?t=" + encodeURIComponent(t))
-        .then(r => r.json())
-        .then(data => {
-          if (data && data.ok) {
-            msg.innerHTML = "<p>已驗證桌碼（" + (data.label || "") + "）。完整菜單客戶端部署中；請改用店內 QR（區網位址）點餐。</p>";
-          } else {
-            msg.innerHTML = "<p>QR 無效或已換新。請向店員索取最新桌貼。</p>";
-          }
-        })
-        .catch(() => {
-          msg.innerHTML = "<p><strong>請連店內 Wi‑Fi 後掃 QR。</strong></p><p>目前無法連到點餐後端（apiBase 未通）。</p>";
-        });
-      return;
+      bindClose();
+    } catch (e) {
+      openPanel(`<div class="ok"><h2>送出失敗</h2><p class="hint">${e.message || e}</p><div class="actions"><button type="button" id="closeP">關閉</button></div></div>`);
+      bindClose();
     }
+  }
 
-    if (params.get("t")) {
-      msg.innerHTML = "<p><strong>請連上店內 Wi‑Fi 後，重新掃描桌上／櫃檯 QR。</strong></p><p>公開網頁尚未接上後端；店內 QR 會指向廚房電腦的區網位址。</p>";
+  document.getElementById("callBtn").onclick = () => {
+    if (isTakeout()) return;
+    try {
+      PingriOrders.callStaff({
+        orderId: lastOrderId,
+        kind: session.kind,
+        table: session.table,
+        label: session.label,
+        token: session.token
+      });
+      openPanel(`<div class="ok"><h2>已通知店員</h2><p class="hint">展示：廚房分頁會顯示「叫店員」。</p><div class="actions"><button type="button" class="primary" id="closeP">好</button></div></div>`);
+      bindClose();
+    } catch {
+      openPanel(`<div class="ok"><h2>通知失敗</h2><p class="hint">請直接向店員舉手示意。</p><div class="actions"><button type="button" id="closeP">關閉</button></div></div>`);
+      bindClose();
     }
-  })();
-  </script>
+  };
+
+  startUI();
+})();
+</script>
 </body>
 </html>

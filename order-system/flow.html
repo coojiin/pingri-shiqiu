@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>點餐流程｜平日食器（展示原型）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  :root { --bg:#f4f0e8; --ink:#2a2622; --soft:#6e655c; --sage:#7a9084; --line:#cfc4b4; --white:#fbf8f2; --seal:#b86a5c }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;padding:0 0 64px}
+  .banner{background:#5f7569;color:#fbf8f2;text-align:center;padding:8px 12px;font-size:12px;letter-spacing:.06em;font-weight:600}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 20px}
+  img.logo{height:44px;margin-bottom:20px}
+  h1{font-family:"Noto Serif TC",serif;font-size:28px;letter-spacing:.12em;margin-bottom:8px}
+  .sub{color:var(--soft);margin-bottom:28px;font-size:14px}
+  h2{font-family:"Noto Serif TC",serif;font-size:18px;letter-spacing:.1em;margin:28px 0 12px;color:var(--sage)}
+  .card{background:var(--white);border:1px solid var(--line);padding:18px 20px;margin-bottom:12px}
+  .step{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start;padding:12px 0;border-bottom:1px dotted var(--line)}
+  .step:last-child{border-bottom:none}
+  .n{font-family:"Noto Serif TC",serif;font-size:20px;color:var(--sage)}
+  ul{padding-left:1.2em;color:var(--soft);font-size:14px}
+  li{margin:4px 0}
+  code{background:#ebe4d8;padding:1px 6px;font-size:13px}
+  a{color:var(--sage)}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+  th{background:#ebe4d8}
+  .warn{color:var(--seal)}
+</style>
+</head>
+<body>
+<div class="banner" id="banner">展示原型｜訂單僅存在此瀏覽器｜正式版需店內主機</div>
+<div class="wrap">
+  <img class="logo" src="../brand/logo-heng-rice-noodle.png" alt="平日食器" />
+  <h1>展示原型 · 驗收流程</h1>
+  <p class="sub">GitHub Pages 客戶端示範 · 無獨立 API · 正式版改跑店內 <code>pingri-order-api</code></p>
+
+  <h2>一、店長驗收（同一台筆電）</h2>
+  <div class="card">
+    <div class="step"><div class="n">1</div><div>開 <a href="tables.html">tables.html</a> → PIN <code>1234</code> →「產生／輪替 Token」→ 可列印桌貼／櫃檯外帶 QR。</div></div>
+    <div class="step"><div class="n">2</div><div>再開分頁 <a href="kitchen.html">kitchen.html</a> → 同一 PIN → <strong>保持開著</strong>。</div></div>
+    <div class="step"><div class="n">3</div><div>第三分頁掃 QR 或從 <a href="index.html">展示中心</a> 進「桌 1 點餐」→ 選餐送出 → 廚房應立刻出現（BroadcastChannel／localStorage）。外帶有取餐號 T-###。</div></div>
+  </div>
+
+  <h2>二、路徑一覽</h2>
+  <div class="card">
+    <table>
+      <tr><th>路徑</th><th>用途</th></tr>
+      <tr><td><code>index.html</code></td><td>展示中心／一鍵示範</td></tr>
+      <tr><td><code>order.html?t=…</code></td><td>客人點餐（自描述 Token）</td></tr>
+      <tr><td><code>tables.html</code></td><td>Token QR 產生／列印</td></tr>
+      <tr><td><code>kitchen.html</code></td><td>廚房出單板</td></tr>
+      <tr><td><code>flow.html</code></td><td>本說明</td></tr>
+    </table>
+  </div>
+
+  <h2>三、技術界線（務必跟店長講清楚）</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Token</strong>：簽名內含桌別／外帶，任一裝置可驗證（展示級 HMAC，非真實資安）。</li>
+      <li><strong>訂單</strong>：只存在該瀏覽器 localStorage；分頁間用 BroadcastChannel 同步。</li>
+      <li class="warn"><strong>跨手機不會同步訂單</strong>——兩支手機各開廚房／點餐時看不到對方單。正式版需店內主機 API。</li>
+      <li>不再使用公開 <code>?table=N</code> 或無 Token 的 <code>?mode=takeout</code>。</li>
+      <li>PIN <code>1234</code> 僅前端常數 · 非正式登入。</li>
+    </ul>
+  </div>
+
+  <h2>四、訂單狀態</h2>
+  <div class="card">
+    <ul>
+      <li><strong>pending</strong> 待做</li>
+      <li><strong>cooking</strong> 製作中</li>
+      <li><strong>done</strong> 完成</li>
+      <li><strong>call</strong> 餐畢叫店員</li>
+    </ul>
+  </div>
+
+  <h2>五、正式版路徑</h2>
+  <div class="card">
+    <p style="font-size:14px;color:var(--soft)">店內 PC 安裝 <code>pingri-order-api</code> → 客人掃 LAN QR → 廚房／多裝置即時同步。本 Pages 原型僅供驗收 UI 與流程。</p>
+  </div>
+
+  <p style="margin-top:24px;font-size:14px">
+    <a href="index.html">展示中心</a> · <a href="kitchen.html">廚房</a> · <a href="tables.html">桌碼 QR</a> · <a href="../">官網</a>
+  </p>
+</div>
+<script src="config.js"></script>
+<script>
+(function(){ const c=window.PINGRI_ORDER||{}; if(c.banner) document.getElementById("banner").textContent=c.banner; })();
+</script>
+</body>
+</html>
